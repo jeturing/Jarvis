@@ -23,12 +23,15 @@
 - [Documentación Completa](#documentación-completa)
 - [Desarrollo](#desarrollo)
 - [Contribuir](#contribuir)
+- [Seguridad](#seguridad)
 
 ---
 
 ## ¿Qué es Jarvis?
 
 **Jarvis** es un **asistente personal de IA** que se ejecuta en tus propios dispositivos. Es una plataforma local-first, auto-hospedada y diseñada para control de usuario único.
+
+> **⚠️ NOTA DE SEGURIDAD**: Jarvis maneja datos sensibles y credenciales de API. Consulta [SECURITY.md](SECURITY.md) para mejores prácticas de seguridad antes de la instalación.
 
 ### Beneficios Clave
 
@@ -49,6 +52,8 @@
 - **Sin Servidor Central**: No hay dependencia de servicios de terceros
 - **Emparejamiento Seguro**: Sistema de códigos para autorización DM
 - **Lista de Permitidos**: Control granular de quién puede interactuar
+- **Cifrado de Credenciales**: Las credenciales se almacenan de forma segura en el directorio local
+- **No Vinculación Pública**: El gateway está diseñado solo para uso local, no para exposición en Internet
 
 ### 💬 Multi-Canal
 - **Mensajería Unificada**: Una interfaz para todos tus canales de chat
@@ -192,9 +197,11 @@
 
 ### Requisitos Previos
 
-- **Node.js ≥ 22.12.0**
+- **Node.js ≥ 22.12.0** (requerido por parches de seguridad CVE-2025-59466, CVE-2026-21636)
 - **npm, pnpm o bun**
 - **macOS, Linux o Windows (WSL2)**
+
+> **🔒 SEGURIDAD**: Asegúrate de usar Node.js 22.12.0 o posterior para incluir parches de seguridad críticos.
 
 ### Instalación con npm
 
@@ -245,7 +252,7 @@ docker-compose up -d
 │   ├── .moltbot.yaml          # Configuración principal
 │   ├── models.json            # Perfiles de modelos IA
 │   └── skills/                # Configuraciones de skills
-├── credentials/
+├── credentials/               # ⚠️ SENSIBLE: Permisos 700 recomendados
 │   ├── anthropic.json         # Tokens OAuth
 │   ├── openai.json
 │   └── channels/              # Credenciales de canales
@@ -256,6 +263,12 @@ docker-compose up -d
     ├── gateway.log            # Logs del gateway
     └── agent.log              # Logs del agente
 ```
+
+> **🔐 IMPORTANTE**: El directorio `credentials/` contiene información sensible. Asegura los permisos del sistema de archivos:
+> ```bash
+> chmod 700 ~/.clawdbot/credentials
+> chmod 600 ~/.clawdbot/credentials/*
+> ```
 
 ### Archivo de Configuración Principal
 
@@ -268,7 +281,7 @@ Edita `~/.clawdbot/config/.moltbot.yaml`:
 gateway:
   mode: local              # 'local' o 'remote'
   port: 18789             # Puerto del servidor
-  bind: loopback          # 'loopback' o 'all'
+  bind: loopback          # ⚠️ SEGURIDAD: Usa 'loopback' para local, NUNCA 'all' en producción
   verbose: true           # Logging detallado
 
 # ========================================
@@ -290,27 +303,27 @@ channels:
     enabled: true
     pairing: code              # Método de emparejamiento
     allowlist:
-      - "+1234567890"          # Números permitidos
+      - "+15555550100"         # Números permitidos (ejemplo ficticio)
   
   # Telegram
   telegram:
     enabled: true
-    bot_token: "${TELEGRAM_BOT_TOKEN}"
+    bot_token: "${TELEGRAM_BOT_TOKEN}"  # ⚠️ Usa variables de entorno, NO hardcodees tokens
   
   # Discord
   discord:
     enabled: true
-    bot_token: "${DISCORD_BOT_TOKEN}"
+    bot_token: "${DISCORD_BOT_TOKEN}"   # ⚠️ Usa variables de entorno, NO hardcodees tokens
   
   # Signal
   signal:
     enabled: true
-    phone: "+1234567890"
+    phone: "+15555550100"                # Ejemplo ficticio
   
   # Slack
   slack:
     enabled: true
-    bot_token: "${SLACK_BOT_TOKEN}"
+    bot_token: "${SLACK_BOT_TOKEN}"     # ⚠️ Usa variables de entorno, NO hardcodees tokens
 
 # ========================================
 # Configuración de Herramientas
@@ -366,19 +379,26 @@ skills:
 
 Crea un archivo `.env` en la raíz del proyecto:
 
+> **⚠️ ADVERTENCIA DE SEGURIDAD**:
+> - NUNCA comitas el archivo `.env` al control de versiones
+> - NUNCA compartas tus tokens/claves de API reales
+> - Asegura el archivo `.env` con permisos `chmod 600 .env`
+> - Rota las credenciales periódicamente
+> - Usa `.env.example` como plantilla (sin valores reales)
+
 ```bash
 # ========================================
 # Tokens de API de IA
 # ========================================
-ANTHROPIC_API_KEY=sk-ant-api03-...
-OPENAI_API_KEY=sk-...
+ANTHROPIC_API_KEY=sk-ant-api03-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+OPENAI_API_KEY=sk-proj-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 # ========================================
 # Tokens de Canales
 # ========================================
-TELEGRAM_BOT_TOKEN=123456:ABC-DEF...
-DISCORD_BOT_TOKEN=MTk4...
-SLACK_BOT_TOKEN=xoxb-...
+TELEGRAM_BOT_TOKEN=1234567890:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+DISCORD_BOT_TOKEN=MTEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+SLACK_BOT_TOKEN=xoxb-XXXXXXXXXXXX-XXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXX
 
 # ========================================
 # Configuración del Gateway
@@ -488,7 +508,7 @@ moltbot gateway --port 18789 --verbose
 
 ```bash
 # Enviar mensaje a un contacto
-moltbot message send --to +1234567890 --message "Hola desde Jarvis"
+moltbot message send --to +15555550100 --message "Hola desde Jarvis"
 
 # Enviar mensaje a un grupo
 moltbot message send --to group_id --message "Hola grupo"
@@ -793,7 +813,57 @@ Gracias a todos los contribuidores que han ayudado a hacer este proyecto posible
 
 ## Seguridad
 
+### Reportar Vulnerabilidades
+
 Para reportar vulnerabilidades de seguridad, por favor lee [SECURITY.md](SECURITY.md).
+
+### Mejores Prácticas de Seguridad
+
+1. **Gestión de Credenciales**
+   - Nunca comitas tokens o claves de API en el control de versiones
+   - Usa variables de entorno para todas las credenciales sensibles
+   - Asegura los archivos `.env` con permisos restrictivos (`chmod 600`)
+   - Rota las credenciales regularmente
+
+2. **Configuración del Gateway**
+   - NUNCA expongas el gateway directamente a Internet
+   - Usa `bind: loopback` para garantizar acceso solo local
+   - Implementa autenticación adicional si usas acceso remoto
+   - Mantén Node.js actualizado (≥22.12.0 para parches de seguridad)
+
+3. **Permisos del Sistema de Archivos**
+   ```bash
+   # Asegura el directorio de credenciales
+   chmod 700 ~/.clawdbot/credentials
+   chmod 600 ~/.clawdbot/credentials/*
+   
+   # Asegura archivos de configuración
+   chmod 600 ~/.clawdbot/config/.moltbot.yaml
+   chmod 600 .env
+   ```
+
+4. **Listas de Permitidos y Control de Acceso**
+   - Siempre configura listas de permitidos para canales
+   - Usa emparejamiento de códigos para mensajes directos
+   - Revisa regularmente quién tiene acceso
+
+5. **Docker y Contenedores**
+   - Ejecuta como usuario no-root
+   - Usa `--read-only` y `--cap-drop=ALL` cuando sea posible
+   - Mantén las imágenes actualizadas
+
+6. **Auditoría y Monitoreo**
+   ```bash
+   # Ejecuta auditoría de seguridad
+   moltbot security audit --deep
+   
+   # Revisa logs regularmente
+   moltbot logs gateway | grep -i "error\|warn\|unauthorized"
+   ```
+
+Para orientación completa sobre seguridad y el modelo de amenazas, consulta:
+- [Documentación de Seguridad](https://docs.molt.bot/gateway/security)
+- [SECURITY.md](SECURITY.md)
 
 ---
 
