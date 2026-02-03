@@ -1,516 +1,806 @@
-# 🦞 Moltbot — Personal AI Assistant
+# 🤖 Jarvis — Personal AI Assistant
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/moltbot/moltbot/main/docs/whatsapp-clawd.jpg" alt="Clawdbot" width="400">
+  <strong>Your Personal AI Assistant Running on Your Own Devices</strong>
 </p>
 
 <p align="center">
-  <strong>EXFOLIATE! EXFOLIATE!</strong>
-</p>
-
-<p align="center">
-  <a href="https://github.com/moltbot/moltbot/actions/workflows/ci.yml?branch=main"><img src="https://img.shields.io/github/actions/workflow/status/moltbot/moltbot/ci.yml?branch=main&style=for-the-badge" alt="CI status"></a>
-  <a href="https://github.com/moltbot/moltbot/releases"><img src="https://img.shields.io/github/v/release/moltbot/moltbot?include_prereleases&style=for-the-badge" alt="GitHub release"></a>
-  <a href="https://deepwiki.com/moltbot/moltbot"><img src="https://img.shields.io/badge/DeepWiki-moltbot-111111?style=for-the-badge" alt="DeepWiki"></a>
-  <a href="https://discord.gg/clawd"><img src="https://img.shields.io/discord/1456350064065904867?label=Discord&logo=discord&logoColor=white&color=5865F2&style=for-the-badge" alt="Discord"></a>
+  <a href="https://github.com/jeturing/Jarvis/actions/workflows/ci.yml?branch=main"><img src="https://img.shields.io/github/actions/workflow/status/jeturing/Jarvis/ci.yml?branch=main&style=for-the-badge" alt="CI status"></a>
+  <a href="https://github.com/jeturing/Jarvis/releases"><img src="https://img.shields.io/github/v/release/jeturing/Jarvis?include_prereleases&style=for-the-badge" alt="GitHub release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="MIT License"></a>
 </p>
 
-**Moltbot** is a *personal AI assistant* you run on your own devices.
-It answers you on the channels you already use (WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, iMessage, Microsoft Teams, WebChat), plus extension channels like BlueBubbles, Matrix, Zalo, and Zalo Personal. It can speak and listen on macOS/iOS/Android, and can render a live Canvas you control. The Gateway is just the control plane — the product is the assistant.
+## 📋 Tabla de Contenidos
 
-If you want a personal, single-user assistant that feels local, fast, and always-on, this is it.
+- [¿Qué es Jarvis?](#qué-es-jarvis)
+- [Características Principales](#características-principales)
+- [Arquitectura del Sistema](#arquitectura-del-sistema)
+- [Diagrama de Uso](#diagrama-de-uso)
+- [Instalación Rápida](#instalación-rápida)
+- [Configuración](#configuración)
+- [Uso Básico](#uso-básico)
+- [Canales Soportados](#canales-soportados)
+- [Documentación Completa](#documentación-completa)
+- [Desarrollo](#desarrollo)
+- [Contribuir](#contribuir)
 
-[Website](https://molt.bot) · [Docs](https://docs.molt.bot) · [Getting Started](https://docs.molt.bot/start/getting-started) · [Updating](https://docs.molt.bot/install/updating) · [Showcase](https://docs.molt.bot/start/showcase) · [FAQ](https://docs.molt.bot/start/faq) · [Wizard](https://docs.molt.bot/start/wizard) · [Nix](https://github.com/moltbot/nix-clawdbot) · [Docker](https://docs.molt.bot/install/docker) · [Discord](https://discord.gg/clawd)
+---
 
-Preferred setup: run the onboarding wizard (`moltbot onboard`). It walks through gateway, workspace, channels, and skills. The CLI wizard is the recommended path and works on **macOS, Linux, and Windows (via WSL2; strongly recommended)**.
-Works with npm, pnpm, or bun.
-New install? Start here: [Getting started](https://docs.molt.bot/start/getting-started)
+## ¿Qué es Jarvis?
 
-**Subscriptions (OAuth):**
-- **[Anthropic](https://www.anthropic.com/)** (Claude Pro/Max)
-- **[OpenAI](https://openai.com/)** (ChatGPT/Codex)
+**Jarvis** es un **asistente personal de IA** que se ejecuta en tus propios dispositivos. Es una plataforma local-first, auto-hospedada y diseñada para control de usuario único.
 
-Model note: while any model is supported, I strongly recommend **Anthropic Pro/Max (100/200) + Opus 4.5** for long‑context strength and better prompt‑injection resistance. See [Onboarding](https://docs.molt.bot/start/onboarding).
+### Beneficios Clave
 
-## Models (selection + auth)
+✅ **Privacidad Total** — Todo se ejecuta localmente, tus datos nunca salen de tu control  
+✅ **Multi-Canal** — Conecta con WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Teams y más  
+✅ **Multi-Plataforma** — Funciona en macOS, iOS, Android, Linux y Windows (WSL2)  
+✅ **Extensible** — Sistema robusto de plugins para añadir funcionalidad  
+✅ **Siempre Activo** — Daemon persistente vía systemd/launchd  
+✅ **Capacidades de Voz** — Voice Wake y Talk Mode en macOS/iOS/Android  
+✅ **Canvas Visual** — Espacio de trabajo visual controlado por el agente  
 
-- Models config + CLI: [Models](https://docs.molt.bot/concepts/models)
-- Auth profile rotation (OAuth vs API keys) + fallbacks: [Model failover](https://docs.molt.bot/concepts/model-failover)
+---
 
-## Install (recommended)
+## Características Principales
 
-Runtime: **Node ≥22**.
+### 🔐 Seguridad y Privacidad
+- **Local-First**: Todos tus datos permanecen en tu dispositivo
+- **Sin Servidor Central**: No hay dependencia de servicios de terceros
+- **Emparejamiento Seguro**: Sistema de códigos para autorización DM
+- **Lista de Permitidos**: Control granular de quién puede interactuar
+
+### 💬 Multi-Canal
+- **Mensajería Unificada**: Una interfaz para todos tus canales de chat
+- **13+ Canales Integrados**: WhatsApp, Telegram, Discord, Slack, Signal, y más
+- **Enrutamiento Inteligente**: Mensajes dirigidos al agente correcto
+- **Respuestas Contextuales**: Mantiene contexto en conversaciones grupales
+
+### 🛠️ Herramientas Poderosas
+- **Browser Tool**: Automatización web con Playwright
+- **Canvas Tool**: Espacio de trabajo visual con A2UI
+- **Image Tool**: Análisis y generación de imágenes
+- **Bash Tool**: Ejecución de comandos del sistema
+- **Cron Tool**: Tareas programadas
+- **Memory Tool**: Almacenamiento y recuperación de contexto
+
+### 🤖 IA Avanzada
+- **Múltiples Modelos**: Claude, GPT, Gemini, Bedrock, Ollama (local)
+- **Failover Automático**: Rotación automática si un modelo falla
+- **Streaming de Herramientas**: Ejecución de herramientas en tiempo real
+- **Multi-Agente**: Agentes aislados por workspace/canal
+
+---
+
+## Arquitectura del Sistema
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    Interfaces de Usuario                         │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌─────────────────┐ │
+│  │  macOS   │  │   iOS    │  │ Android  │  │   CLI / Web UI  │ │
+│  │   App    │  │   App    │  │   App    │  │                 │ │
+│  └──────────┘  └──────────┘  └──────────┘  └─────────────────┘ │
+└─────────────────────────────────────────────────────────────────┘
+                              │ WebSocket / HTTP
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│                      Gateway (Servidor)                          │
+│  • Gestión de sesiones y enrutamiento de mensajes               │
+│  • Catálogo de modelos IA y autenticación                       │
+│  • Trabajos programados (cron) y webhooks                       │
+│  • Herramienta de navegador compartida                          │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│                    Runtime de Agente (Pi Agent)                  │
+│  • Ejecución de modelos IA (Claude, GPT, etc.)                  │
+│  • Streaming de herramientas en tiempo real                     │
+│  • Gestión de contexto de sesión                                │
+│  • Failover automático de modelos                               │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│                      Capa Multi-Canal                            │
+│  WhatsApp │ Telegram │ Signal │ Discord │ Slack │ iMessage      │
+│  Teams │ Matrix │ Zalo │ BlueBubbles │ LINE │ Voice Call        │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│                    Servicios Externos (IA)                       │
+│  Anthropic Claude │ OpenAI GPT │ Google Gemini │ AWS Bedrock    │
+│  Ollama (Local) │ Otros proveedores                             │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+📖 **Profundizar**: Ver [ARCHITECTURE.md](docs/ARCHITECTURE.md) para detalles completos de arquitectura
+
+---
+
+## Diagrama de Uso
+
+### Flujo de Mensaje Completo
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  1. Usuario envía mensaje desde canal (WhatsApp, Telegram, etc.)│
+└───────────────────────┬─────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  2. Canal recibe mensaje y lo normaliza                         │
+│     • Extrae texto, medios, contexto de respuesta               │
+│     • Añade metadata del canal                                  │
+└───────────────────────┬─────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  3. Verificación de seguridad                                   │
+│     • Verifica lista de permitidos                              │
+│     • Valida emparejamiento para DMs                            │
+│     • Comprueba permisos de grupo                               │
+└───────────────────────┬─────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  4. Gateway enruta mensaje                                      │
+│     • Determina sesión apropiada                                │
+│     • Verifica modo de activación (mention/reply/always)        │
+│     • Encola o ejecuta inmediatamente                           │
+└───────────────────────┬─────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  5. Agente procesa mensaje                                      │
+│     • Carga contexto de sesión                                  │
+│     • Ejecuta modelo IA con herramientas                        │
+│     • Stream de llamadas y resultados de herramientas           │
+└───────────────────────┬─────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  6. Ejecución de herramientas (si es necesario)                 │
+│     • Browser (automatización web)                              │
+│     • Bash (ejecutar comandos)                                  │
+│     • Canvas (workspace visual)                                 │
+│     • Memory (recuperar contexto)                               │
+│     • Otras herramientas personalizadas                         │
+└───────────────────────┬─────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  7. Agente genera respuesta                                     │
+│     • Basada en resultados de herramientas                      │
+│     • Aplica modo de thinking (low/high/always)                 │
+│     • Formatea para canal destino                               │
+└───────────────────────┬─────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  8. Respuesta enviada de vuelta                                 │
+│     • Formatea para protocolo específico del canal              │
+│     • Fragmenta mensajes largos si es necesario                 │
+│     • Añade indicadores de escritura/reacciones                 │
+└───────────────────────┬─────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  9. Usuario recibe respuesta en su canal                        │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+📖 **Profundizar**: Ver [Flujo de Datos](docs/ARCHITECTURE.md#data-flow) en documentación de arquitectura
+
+---
+
+## Instalación Rápida
+
+### Requisitos Previos
+
+- **Node.js ≥ 22.12.0**
+- **npm, pnpm o bun**
+- **macOS, Linux o Windows (WSL2)**
+
+### Instalación con npm
 
 ```bash
+# Instalar globalmente
 npm install -g moltbot@latest
-# or: pnpm add -g moltbot@latest
 
+# Ejecutar asistente de configuración
 moltbot onboard --install-daemon
 ```
 
-The wizard installs the Gateway daemon (launchd/systemd user service) so it stays running.
-Legacy note: `clawdbot` remains available as a compatibility shim.
-
-## Quick start (TL;DR)
-
-Runtime: **Node ≥22**.
-
-Full beginner guide (auth, pairing, channels): [Getting started](https://docs.molt.bot/start/getting-started)
+### Instalación desde Código Fuente
 
 ```bash
-moltbot onboard --install-daemon
+# Clonar repositorio
+git clone https://github.com/jeturing/Jarvis.git
+cd Jarvis
 
-moltbot gateway --port 18789 --verbose
-
-# Send a message
-moltbot message send --to +1234567890 --message "Hello from Moltbot"
-
-# Talk to the assistant (optionally deliver back to any connected channel: WhatsApp/Telegram/Slack/Discord/Google Chat/Signal/iMessage/BlueBubbles/Microsoft Teams/Matrix/Zalo/Zalo Personal/WebChat)
-moltbot agent --message "Ship checklist" --thinking high
-```
-
-Upgrading? [Updating guide](https://docs.molt.bot/install/updating) (and run `moltbot doctor`).
-
-## Development channels
-
-- **stable**: tagged releases (`vYYYY.M.D` or `vYYYY.M.D-<patch>`), npm dist-tag `latest`.
-- **beta**: prerelease tags (`vYYYY.M.D-beta.N`), npm dist-tag `beta` (macOS app may be missing).
-- **dev**: moving head of `main`, npm dist-tag `dev` (when published).
-
-Switch channels (git + npm): `moltbot update --channel stable|beta|dev`.
-Details: [Development channels](https://docs.molt.bot/install/development-channels).
-
-## From source (development)
-
-Prefer `pnpm` for builds from source. Bun is optional for running TypeScript directly.
-
-```bash
-git clone https://github.com/moltbot/moltbot.git
-cd moltbot
-
+# Instalar dependencias
 pnpm install
-pnpm ui:build # auto-installs UI deps on first run
+
+# Construir proyecto
+pnpm ui:build
 pnpm build
 
+# Ejecutar asistente de configuración
 pnpm moltbot onboard --install-daemon
-
-# Dev loop (auto-reload on TS changes)
-pnpm gateway:watch
 ```
 
-Note: `pnpm moltbot ...` runs TypeScript directly (via `tsx`). `pnpm build` produces `dist/` for running via Node / the packaged `moltbot` binary.
+### Instalación con Docker
 
-## Security defaults (DM access)
-
-Moltbot connects to real messaging surfaces. Treat inbound DMs as **untrusted input**.
-
-Full security guide: [Security](https://docs.molt.bot/gateway/security)
-
-Default behavior on Telegram/WhatsApp/Signal/iMessage/Microsoft Teams/Discord/Google Chat/Slack:
-- **DM pairing** (`dmPolicy="pairing"` / `channels.discord.dm.policy="pairing"` / `channels.slack.dm.policy="pairing"`): unknown senders receive a short pairing code and the bot does not process their message.
-- Approve with: `moltbot pairing approve <channel> <code>` (then the sender is added to a local allowlist store).
-- Public inbound DMs require an explicit opt-in: set `dmPolicy="open"` and include `"*"` in the channel allowlist (`allowFrom` / `channels.discord.dm.allowFrom` / `channels.slack.dm.allowFrom`).
-
-Run `moltbot doctor` to surface risky/misconfigured DM policies.
-
-## Highlights
-
-- **[Local-first Gateway](https://docs.molt.bot/gateway)** — single control plane for sessions, channels, tools, and events.
-- **[Multi-channel inbox](https://docs.molt.bot/channels)** — WhatsApp, Telegram, Slack, Discord, Google Chat, Signal, iMessage, BlueBubbles, Microsoft Teams, Matrix, Zalo, Zalo Personal, WebChat, macOS, iOS/Android.
-- **[Multi-agent routing](https://docs.molt.bot/gateway/configuration)** — route inbound channels/accounts/peers to isolated agents (workspaces + per-agent sessions).
-- **[Voice Wake](https://docs.molt.bot/nodes/voicewake) + [Talk Mode](https://docs.molt.bot/nodes/talk)** — always-on speech for macOS/iOS/Android with ElevenLabs.
-- **[Live Canvas](https://docs.molt.bot/platforms/mac/canvas)** — agent-driven visual workspace with [A2UI](https://docs.molt.bot/platforms/mac/canvas#canvas-a2ui).
-- **[First-class tools](https://docs.molt.bot/tools)** — browser, canvas, nodes, cron, sessions, and Discord/Slack actions.
-- **[Companion apps](https://docs.molt.bot/platforms/macos)** — macOS menu bar app + iOS/Android [nodes](https://docs.molt.bot/nodes).
-- **[Onboarding](https://docs.molt.bot/start/wizard) + [skills](https://docs.molt.bot/tools/skills)** — wizard-driven setup with bundled/managed/workspace skills.
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=moltbot/moltbot&type=date&legend=top-left)](https://www.star-history.com/#moltbot/moltbot&type=date&legend=top-left)
-
-## Everything we built so far
-
-### Core platform
-- [Gateway WS control plane](https://docs.molt.bot/gateway) with sessions, presence, config, cron, webhooks, [Control UI](https://docs.molt.bot/web), and [Canvas host](https://docs.molt.bot/platforms/mac/canvas#canvas-a2ui).
-- [CLI surface](https://docs.molt.bot/tools/agent-send): gateway, agent, send, [wizard](https://docs.molt.bot/start/wizard), and [doctor](https://docs.molt.bot/gateway/doctor).
-- [Pi agent runtime](https://docs.molt.bot/concepts/agent) in RPC mode with tool streaming and block streaming.
-- [Session model](https://docs.molt.bot/concepts/session): `main` for direct chats, group isolation, activation modes, queue modes, reply-back. Group rules: [Groups](https://docs.molt.bot/concepts/groups).
-- [Media pipeline](https://docs.molt.bot/nodes/images): images/audio/video, transcription hooks, size caps, temp file lifecycle. Audio details: [Audio](https://docs.molt.bot/nodes/audio).
-
-### Channels
-- [Channels](https://docs.molt.bot/channels): [WhatsApp](https://docs.molt.bot/channels/whatsapp) (Baileys), [Telegram](https://docs.molt.bot/channels/telegram) (grammY), [Slack](https://docs.molt.bot/channels/slack) (Bolt), [Discord](https://docs.molt.bot/channels/discord) (discord.js), [Google Chat](https://docs.molt.bot/channels/googlechat) (Chat API), [Signal](https://docs.molt.bot/channels/signal) (signal-cli), [iMessage](https://docs.molt.bot/channels/imessage) (imsg), [BlueBubbles](https://docs.molt.bot/channels/bluebubbles) (extension), [Microsoft Teams](https://docs.molt.bot/channels/msteams) (extension), [Matrix](https://docs.molt.bot/channels/matrix) (extension), [Zalo](https://docs.molt.bot/channels/zalo) (extension), [Zalo Personal](https://docs.molt.bot/channels/zalouser) (extension), [WebChat](https://docs.molt.bot/web/webchat).
-- [Group routing](https://docs.molt.bot/concepts/group-messages): mention gating, reply tags, per-channel chunking and routing. Channel rules: [Channels](https://docs.molt.bot/channels).
-
-### Apps + nodes
-- [macOS app](https://docs.molt.bot/platforms/macos): menu bar control plane, [Voice Wake](https://docs.molt.bot/nodes/voicewake)/PTT, [Talk Mode](https://docs.molt.bot/nodes/talk) overlay, [WebChat](https://docs.molt.bot/web/webchat), debug tools, [remote gateway](https://docs.molt.bot/gateway/remote) control.
-- [iOS node](https://docs.molt.bot/platforms/ios): [Canvas](https://docs.molt.bot/platforms/mac/canvas), [Voice Wake](https://docs.molt.bot/nodes/voicewake), [Talk Mode](https://docs.molt.bot/nodes/talk), camera, screen recording, Bonjour pairing.
-- [Android node](https://docs.molt.bot/platforms/android): [Canvas](https://docs.molt.bot/platforms/mac/canvas), [Talk Mode](https://docs.molt.bot/nodes/talk), camera, screen recording, optional SMS.
-- [macOS node mode](https://docs.molt.bot/nodes): system.run/notify + canvas/camera exposure.
-
-### Tools + automation
-- [Browser control](https://docs.molt.bot/tools/browser): dedicated moltbot Chrome/Chromium, snapshots, actions, uploads, profiles.
-- [Canvas](https://docs.molt.bot/platforms/mac/canvas): [A2UI](https://docs.molt.bot/platforms/mac/canvas#canvas-a2ui) push/reset, eval, snapshot.
-- [Nodes](https://docs.molt.bot/nodes): camera snap/clip, screen record, [location.get](https://docs.molt.bot/nodes/location-command), notifications.
-- [Cron + wakeups](https://docs.molt.bot/automation/cron-jobs); [webhooks](https://docs.molt.bot/automation/webhook); [Gmail Pub/Sub](https://docs.molt.bot/automation/gmail-pubsub).
-- [Skills platform](https://docs.molt.bot/tools/skills): bundled, managed, and workspace skills with install gating + UI.
-
-### Runtime + safety
-- [Channel routing](https://docs.molt.bot/concepts/channel-routing), [retry policy](https://docs.molt.bot/concepts/retry), and [streaming/chunking](https://docs.molt.bot/concepts/streaming).
-- [Presence](https://docs.molt.bot/concepts/presence), [typing indicators](https://docs.molt.bot/concepts/typing-indicators), and [usage tracking](https://docs.molt.bot/concepts/usage-tracking).
-- [Models](https://docs.molt.bot/concepts/models), [model failover](https://docs.molt.bot/concepts/model-failover), and [session pruning](https://docs.molt.bot/concepts/session-pruning).
-- [Security](https://docs.molt.bot/gateway/security) and [troubleshooting](https://docs.molt.bot/channels/troubleshooting).
-
-### Ops + packaging
-- [Control UI](https://docs.molt.bot/web) + [WebChat](https://docs.molt.bot/web/webchat) served directly from the Gateway.
-- [Tailscale Serve/Funnel](https://docs.molt.bot/gateway/tailscale) or [SSH tunnels](https://docs.molt.bot/gateway/remote) with token/password auth.
-- [Nix mode](https://docs.molt.bot/install/nix) for declarative config; [Docker](https://docs.molt.bot/install/docker)-based installs.
-- [Doctor](https://docs.molt.bot/gateway/doctor) migrations, [logging](https://docs.molt.bot/logging).
-
-## How it works (short)
-
-```
-WhatsApp / Telegram / Slack / Discord / Google Chat / Signal / iMessage / BlueBubbles / Microsoft Teams / Matrix / Zalo / Zalo Personal / WebChat
-               │
-               ▼
-┌───────────────────────────────┐
-│            Gateway            │
-│       (control plane)         │
-│     ws://127.0.0.1:18789      │
-└──────────────┬────────────────┘
-               │
-               ├─ Pi agent (RPC)
-               ├─ CLI (moltbot …)
-               ├─ WebChat UI
-               ├─ macOS app
-               └─ iOS / Android nodes
+```bash
+# Usando Docker Compose
+docker-compose up -d
 ```
 
-## Key subsystems
+📖 **Profundizar**: Ver [Guía de Instalación Completa](docs/README-ES.md#configuración-y-despliegue)
 
-- **[Gateway WebSocket network](https://docs.molt.bot/concepts/architecture)** — single WS control plane for clients, tools, and events (plus ops: [Gateway runbook](https://docs.molt.bot/gateway)).
-- **[Tailscale exposure](https://docs.molt.bot/gateway/tailscale)** — Serve/Funnel for the Gateway dashboard + WS (remote access: [Remote](https://docs.molt.bot/gateway/remote)).
-- **[Browser control](https://docs.molt.bot/tools/browser)** — moltbot‑managed Chrome/Chromium with CDP control.
-- **[Canvas + A2UI](https://docs.molt.bot/platforms/mac/canvas)** — agent‑driven visual workspace (A2UI host: [Canvas/A2UI](https://docs.molt.bot/platforms/mac/canvas#canvas-a2ui)).
-- **[Voice Wake](https://docs.molt.bot/nodes/voicewake) + [Talk Mode](https://docs.molt.bot/nodes/talk)** — always‑on speech and continuous conversation.
-- **[Nodes](https://docs.molt.bot/nodes)** — Canvas, camera snap/clip, screen record, `location.get`, notifications, plus macOS‑only `system.run`/`system.notify`.
+---
 
-## Tailscale access (Gateway dashboard)
+## Configuración
 
-Moltbot can auto-configure Tailscale **Serve** (tailnet-only) or **Funnel** (public) while the Gateway stays bound to loopback. Configure `gateway.tailscale.mode`:
+### Estructura de Configuración
 
-- `off`: no Tailscale automation (default).
-- `serve`: tailnet-only HTTPS via `tailscale serve` (uses Tailscale identity headers by default).
-- `funnel`: public HTTPS via `tailscale funnel` (requires shared password auth).
-
-Notes:
-- `gateway.bind` must stay `loopback` when Serve/Funnel is enabled (Moltbot enforces this).
-- Serve can be forced to require a password by setting `gateway.auth.mode: "password"` or `gateway.auth.allowTailscale: false`.
-- Funnel refuses to start unless `gateway.auth.mode: "password"` is set.
-- Optional: `gateway.tailscale.resetOnExit` to undo Serve/Funnel on shutdown.
-
-Details: [Tailscale guide](https://docs.molt.bot/gateway/tailscale) · [Web surfaces](https://docs.molt.bot/web)
-
-## Remote Gateway (Linux is great)
-
-It’s perfectly fine to run the Gateway on a small Linux instance. Clients (macOS app, CLI, WebChat) can connect over **Tailscale Serve/Funnel** or **SSH tunnels**, and you can still pair device nodes (macOS/iOS/Android) to execute device‑local actions when needed.
-
-- **Gateway host** runs the exec tool and channel connections by default.
-- **Device nodes** run device‑local actions (`system.run`, camera, screen recording, notifications) via `node.invoke`.
-In short: exec runs where the Gateway lives; device actions run where the device lives.
-
-Details: [Remote access](https://docs.molt.bot/gateway/remote) · [Nodes](https://docs.molt.bot/nodes) · [Security](https://docs.molt.bot/gateway/security)
-
-## macOS permissions via the Gateway protocol
-
-The macOS app can run in **node mode** and advertises its capabilities + permission map over the Gateway WebSocket (`node.list` / `node.describe`). Clients can then execute local actions via `node.invoke`:
-
-- `system.run` runs a local command and returns stdout/stderr/exit code; set `needsScreenRecording: true` to require screen-recording permission (otherwise you’ll get `PERMISSION_MISSING`).
-- `system.notify` posts a user notification and fails if notifications are denied.
-- `canvas.*`, `camera.*`, `screen.record`, and `location.get` are also routed via `node.invoke` and follow TCC permission status.
-
-Elevated bash (host permissions) is separate from macOS TCC:
-
-- Use `/elevated on|off` to toggle per‑session elevated access when enabled + allowlisted.
-- Gateway persists the per‑session toggle via `sessions.patch` (WS method) alongside `thinkingLevel`, `verboseLevel`, `model`, `sendPolicy`, and `groupActivation`.
-
-Details: [Nodes](https://docs.molt.bot/nodes) · [macOS app](https://docs.molt.bot/platforms/macos) · [Gateway protocol](https://docs.molt.bot/concepts/architecture)
-
-## Agent to Agent (sessions_* tools)
-
-- Use these to coordinate work across sessions without jumping between chat surfaces.
-- `sessions_list` — discover active sessions (agents) and their metadata.
-- `sessions_history` — fetch transcript logs for a session.
-- `sessions_send` — message another session; optional reply‑back ping‑pong + announce step (`REPLY_SKIP`, `ANNOUNCE_SKIP`).
-
-Details: [Session tools](https://docs.molt.bot/concepts/session-tool)
-
-## Skills registry (ClawdHub)
-
-ClawdHub is a minimal skill registry. With ClawdHub enabled, the agent can search for skills automatically and pull in new ones as needed.
-
-[ClawdHub](https://ClawdHub.com)
-
-## Chat commands
-
-Send these in WhatsApp/Telegram/Slack/Google Chat/Microsoft Teams/WebChat (group commands are owner-only):
-
-- `/status` — compact session status (model + tokens, cost when available)
-- `/new` or `/reset` — reset the session
-- `/compact` — compact session context (summary)
-- `/think <level>` — off|minimal|low|medium|high|xhigh (GPT-5.2 + Codex models only)
-- `/verbose on|off`
-- `/usage off|tokens|full` — per-response usage footer
-- `/restart` — restart the gateway (owner-only in groups)
-- `/activation mention|always` — group activation toggle (groups only)
-
-## Apps (optional)
-
-The Gateway alone delivers a great experience. All apps are optional and add extra features.
-
-If you plan to build/run companion apps, follow the platform runbooks below.
-
-### macOS (Moltbot.app) (optional)
-
-- Menu bar control for the Gateway and health.
-- Voice Wake + push-to-talk overlay.
-- WebChat + debug tools.
-- Remote gateway control over SSH.
-
-Note: signed builds required for macOS permissions to stick across rebuilds (see `docs/mac/permissions.md`).
-
-### iOS node (optional)
-
-- Pairs as a node via the Bridge.
-- Voice trigger forwarding + Canvas surface.
-- Controlled via `moltbot nodes …`.
-
-Runbook: [iOS connect](https://docs.molt.bot/platforms/ios).
-
-### Android node (optional)
-
-- Pairs via the same Bridge + pairing flow as iOS.
-- Exposes Canvas, Camera, and Screen capture commands.
-- Runbook: [Android connect](https://docs.molt.bot/platforms/android).
-
-## Agent workspace + skills
-
-- Workspace root: `~/clawd` (configurable via `agents.defaults.workspace`).
-- Injected prompt files: `AGENTS.md`, `SOUL.md`, `TOOLS.md`.
-- Skills: `~/clawd/skills/<skill>/SKILL.md`.
-
-## Configuration
-
-Minimal `~/.clawdbot/moltbot.json` (model + defaults):
-
-```json5
-{
-  agent: {
-    model: "anthropic/claude-opus-4-5"
-  }
-}
+```
+~/.clawdbot/
+├── config/
+│   ├── .moltbot.yaml          # Configuración principal
+│   ├── models.json            # Perfiles de modelos IA
+│   └── skills/                # Configuraciones de skills
+├── credentials/
+│   ├── anthropic.json         # Tokens OAuth
+│   ├── openai.json
+│   └── channels/              # Credenciales de canales
+├── sessions/
+│   ├── main/                  # Datos de sesión principal
+│   └── groups/                # Sesiones de grupos
+└── logs/
+    ├── gateway.log            # Logs del gateway
+    └── agent.log              # Logs del agente
 ```
 
-[Full configuration reference (all keys + examples).](https://docs.molt.bot/gateway/configuration)
+### Archivo de Configuración Principal
 
-## Security model (important)
+Edita `~/.clawdbot/config/.moltbot.yaml`:
 
-- **Default:** tools run on the host for the **main** session, so the agent has full access when it’s just you.
-- **Group/channel safety:** set `agents.defaults.sandbox.mode: "non-main"` to run **non‑main sessions** (groups/channels) inside per‑session Docker sandboxes; bash then runs in Docker for those sessions.
-- **Sandbox defaults:** allowlist `bash`, `process`, `read`, `write`, `edit`, `sessions_list`, `sessions_history`, `sessions_send`, `sessions_spawn`; denylist `browser`, `canvas`, `nodes`, `cron`, `discord`, `gateway`.
+```yaml
+# ========================================
+# Configuración del Gateway
+# ========================================
+gateway:
+  mode: local              # 'local' o 'remote'
+  port: 18789             # Puerto del servidor
+  bind: loopback          # 'loopback' o 'all'
+  verbose: true           # Logging detallado
 
-Details: [Security guide](https://docs.molt.bot/gateway/security) · [Docker + sandboxing](https://docs.molt.bot/install/docker) · [Sandbox config](https://docs.molt.bot/gateway/configuration)
+# ========================================
+# Configuración de Agentes
+# ========================================
+agents:
+  default:
+    model: claude-4.5-sonnet    # Modelo IA por defecto
+    thinking: high              # Nivel de thinking (low/high/always)
+    temperature: 0.7            # Temperatura del modelo
+    max_tokens: 8192            # Tokens máximos
 
-### [WhatsApp](https://docs.molt.bot/channels/whatsapp)
+# ========================================
+# Configuración de Canales
+# ========================================
+channels:
+  # WhatsApp
+  whatsapp:
+    enabled: true
+    pairing: code              # Método de emparejamiento
+    allowlist:
+      - "+1234567890"          # Números permitidos
+  
+  # Telegram
+  telegram:
+    enabled: true
+    bot_token: "${TELEGRAM_BOT_TOKEN}"
+  
+  # Discord
+  discord:
+    enabled: true
+    bot_token: "${DISCORD_BOT_TOKEN}"
+  
+  # Signal
+  signal:
+    enabled: true
+    phone: "+1234567890"
+  
+  # Slack
+  slack:
+    enabled: true
+    bot_token: "${SLACK_BOT_TOKEN}"
 
-- Link the device: `pnpm moltbot channels login` (stores creds in `~/.clawdbot/credentials`).
-- Allowlist who can talk to the assistant via `channels.whatsapp.allowFrom`.
-- If `channels.whatsapp.groups` is set, it becomes a group allowlist; include `"*"` to allow all.
+# ========================================
+# Configuración de Herramientas
+# ========================================
+tools:
+  browser:
+    enabled: true
+    headless: true             # Navegador sin interfaz
+    timeout: 30000             # Timeout en ms
+  
+  canvas:
+    enabled: true
+    port: 8080                 # Puerto Canvas
+  
+  bash:
+    enabled: true
+    timeout: 60000             # Timeout comandos
+  
+  memory:
+    enabled: true
+    max_size: 1000             # Entradas máximas
 
-### [Telegram](https://docs.molt.bot/channels/telegram)
+# ========================================
+# Configuración de Sandbox (Opcional)
+# ========================================
+sandbox:
+  enabled: false
+  docker_image: "jarvis/sandbox"
+  
+# ========================================
+# Configuración de Plugins
+# ========================================
+plugins:
+  - name: matrix
+    enabled: true
+    config:
+      homeserver: "https://matrix.org"
+  
+  - name: voice-call
+    enabled: false
+    config:
+      provider: "twilio"
 
-- Set `TELEGRAM_BOT_TOKEN` or `channels.telegram.botToken` (env wins).
-- Optional: set `channels.telegram.groups` (with `channels.telegram.groups."*".requireMention`); when set, it is a group allowlist (include `"*"` to allow all). Also `channels.telegram.allowFrom` or `channels.telegram.webhookUrl` as needed.
-
-```json5
-{
-  channels: {
-    telegram: {
-      botToken: "123456:ABCDEF"
-    }
-  }
-}
+# ========================================
+# Configuración de Skills
+# ========================================
+skills:
+  - workspace1
+  - workspace2
 ```
 
-### [Slack](https://docs.molt.bot/channels/slack)
+### Variables de Entorno
 
-- Set `SLACK_BOT_TOKEN` + `SLACK_APP_TOKEN` (or `channels.slack.botToken` + `channels.slack.appToken`).
+Crea un archivo `.env` en la raíz del proyecto:
 
-### [Discord](https://docs.molt.bot/channels/discord)
+```bash
+# ========================================
+# Tokens de API de IA
+# ========================================
+ANTHROPIC_API_KEY=sk-ant-api03-...
+OPENAI_API_KEY=sk-...
 
-- Set `DISCORD_BOT_TOKEN` or `channels.discord.token` (env wins).
-- Optional: set `commands.native`, `commands.text`, or `commands.useAccessGroups`, plus `channels.discord.dm.allowFrom`, `channels.discord.guilds`, or `channels.discord.mediaMaxMb` as needed.
+# ========================================
+# Tokens de Canales
+# ========================================
+TELEGRAM_BOT_TOKEN=123456:ABC-DEF...
+DISCORD_BOT_TOKEN=MTk4...
+SLACK_BOT_TOKEN=xoxb-...
 
-```json5
-{
-  channels: {
-    discord: {
-      token: "1234abcd"
-    }
-  }
-}
+# ========================================
+# Configuración del Gateway
+# ========================================
+CLAWDBOT_GATEWAY_PORT=18789
+CLAWDBOT_GATEWAY_BIND=loopback
+
+# ========================================
+# Configuración de Modo
+# ========================================
+CLAWDBOT_PROFILE=production    # 'production' o 'dev'
+CLAWDBOT_SKIP_CHANNELS=0
+
+# ========================================
+# Configuración de Depuración
+# ========================================
+CLAWDBOT_DEBUG=0
+CLAWDBOT_VERBOSE=0
 ```
 
-### [Signal](https://docs.molt.bot/channels/signal)
+### Diagrama de Configuración
 
-- Requires `signal-cli` and a `channels.signal` config section.
+```
+┌────────────────────────────────────────────────────────────┐
+│                  Proceso de Configuración                   │
+└────────────────────────────────────────────────────────────┘
 
-### [iMessage](https://docs.molt.bot/channels/imessage)
+1. INSTALACIÓN
+   │
+   ├─→ Instalar paquete npm/pnpm
+   │
+   └─→ Ejecutar: moltbot onboard --install-daemon
 
-- macOS only; Messages must be signed in.
-- If `channels.imessage.groups` is set, it becomes a group allowlist; include `"*"` to allow all.
+2. CONFIGURACIÓN INTERACTIVA
+   │
+   ├─→ Seleccionar modelos IA (Claude, GPT, etc.)
+   │   └─→ Añadir tokens API o OAuth
+   │
+   ├─→ Configurar canales
+   │   ├─→ WhatsApp (emparejamiento QR)
+   │   ├─→ Telegram (bot token)
+   │   ├─→ Discord (bot token)
+   │   ├─→ Signal (phone number)
+   │   └─→ Otros canales
+   │
+   ├─→ Configurar herramientas
+   │   ├─→ Browser (Playwright)
+   │   ├─→ Canvas (A2UI)
+   │   ├─→ Bash (comandos)
+   │   └─→ Memory (almacenamiento)
+   │
+   └─→ Configurar seguridad
+       ├─→ Listas de permitidos
+       ├─→ Políticas de emparejamiento DM
+       └─→ Permisos de grupo
 
-### [Microsoft Teams](https://docs.molt.bot/channels/msteams)
+3. VERIFICACIÓN
+   │
+   ├─→ Ejecutar: moltbot doctor
+   │   └─→ Verifica configuración y detecta problemas
+   │
+   └─→ Ejecutar: moltbot channels status
+       └─→ Verifica estado de canales
 
-- Configure a Teams app + Bot Framework, then add a `msteams` config section.
-- Allowlist who can talk via `msteams.allowFrom`; group access via `msteams.groupAllowFrom` or `msteams.groupPolicy: "open"`.
+4. INICIO DEL GATEWAY
+   │
+   ├─→ Modo Daemon: moltbot daemon start
+   │   └─→ Gateway se ejecuta en segundo plano
+   │
+   └─→ Modo Manual: moltbot gateway --port 18789
+       └─→ Gateway se ejecuta en primer plano
 
-### [WebChat](https://docs.molt.bot/web/webchat)
+5. EMPAREJAMIENTO DE CANALES
+   │
+   ├─→ WhatsApp: Escanear código QR
+   │
+   ├─→ Otros canales: Aprobar códigos de emparejamiento
+   │   └─→ Ejecutar: moltbot pairing approve <canal> <código>
+   │
+   └─→ Verificar conexiones
+       └─→ Ejecutar: moltbot channels status --probe
 
-- Uses the Gateway WebSocket; no separate WebChat port/config.
-
-Browser control (optional):
-
-```json5
-{
-  browser: {
-    enabled: true,
-    color: "#FF4500"
-  }
-}
+6. ¡LISTO!
+   └─→ Enviar mensaje de prueba
+       └─→ Ejecutar: moltbot agent --message "Hola Jarvis"
 ```
 
-## Docs
+📖 **Profundizar**: Ver [Guía de Configuración Completa](docs/README-ES.md#configuración-y-despliegue)
 
-Use these when you’re past the onboarding flow and want the deeper reference.
-- [Start with the docs index for navigation and “what’s where.”](https://docs.molt.bot)
-- [Read the architecture overview for the gateway + protocol model.](https://docs.molt.bot/concepts/architecture)
-- [Use the full configuration reference when you need every key and example.](https://docs.molt.bot/gateway/configuration)
-- [Run the Gateway by the book with the operational runbook.](https://docs.molt.bot/gateway)
-- [Learn how the Control UI/Web surfaces work and how to expose them safely.](https://docs.molt.bot/web)
-- [Understand remote access over SSH tunnels or tailnets.](https://docs.molt.bot/gateway/remote)
-- [Follow the onboarding wizard flow for a guided setup.](https://docs.molt.bot/start/wizard)
-- [Wire external triggers via the webhook surface.](https://docs.molt.bot/automation/webhook)
-- [Set up Gmail Pub/Sub triggers.](https://docs.molt.bot/automation/gmail-pubsub)
-- [Learn the macOS menu bar companion details.](https://docs.molt.bot/platforms/mac/menu-bar)
-- [Platform guides: Windows (WSL2)](https://docs.molt.bot/platforms/windows), [Linux](https://docs.molt.bot/platforms/linux), [macOS](https://docs.molt.bot/platforms/macos), [iOS](https://docs.molt.bot/platforms/ios), [Android](https://docs.molt.bot/platforms/android)
-- [Debug common failures with the troubleshooting guide.](https://docs.molt.bot/channels/troubleshooting)
-- [Review security guidance before exposing anything.](https://docs.molt.bot/gateway/security)
+---
 
-## Advanced docs (discovery + control)
+## Uso Básico
 
-- [Discovery + transports](https://docs.molt.bot/gateway/discovery)
-- [Bonjour/mDNS](https://docs.molt.bot/gateway/bonjour)
-- [Gateway pairing](https://docs.molt.bot/gateway/pairing)
-- [Remote gateway README](https://docs.molt.bot/gateway/remote-gateway-readme)
-- [Control UI](https://docs.molt.bot/web/control-ui)
-- [Dashboard](https://docs.molt.bot/web/dashboard)
+### Iniciar el Gateway
 
-## Operations & troubleshooting
+```bash
+# Modo daemon (recomendado)
+moltbot daemon install
+moltbot daemon start
+moltbot daemon status
 
-- [Health checks](https://docs.molt.bot/gateway/health)
-- [Gateway lock](https://docs.molt.bot/gateway/gateway-lock)
-- [Background process](https://docs.molt.bot/gateway/background-process)
-- [Browser troubleshooting (Linux)](https://docs.molt.bot/tools/browser-linux-troubleshooting)
-- [Logging](https://docs.molt.bot/logging)
+# Modo manual (desarrollo)
+moltbot gateway --port 18789 --verbose
+```
 
-## Deep dives
+### Enviar Mensajes
 
-- [Agent loop](https://docs.molt.bot/concepts/agent-loop)
-- [Presence](https://docs.molt.bot/concepts/presence)
-- [TypeBox schemas](https://docs.molt.bot/concepts/typebox)
-- [RPC adapters](https://docs.molt.bot/reference/rpc)
-- [Queue](https://docs.molt.bot/concepts/queue)
+```bash
+# Enviar mensaje a un contacto
+moltbot message send --to +1234567890 --message "Hola desde Jarvis"
 
-## Workspace & skills
+# Enviar mensaje a un grupo
+moltbot message send --to group_id --message "Hola grupo"
+```
 
-- [Skills config](https://docs.molt.bot/tools/skills-config)
-- [Default AGENTS](https://docs.molt.bot/reference/AGENTS.default)
-- [Templates: AGENTS](https://docs.molt.bot/reference/templates/AGENTS)
-- [Templates: BOOTSTRAP](https://docs.molt.bot/reference/templates/BOOTSTRAP)
-- [Templates: IDENTITY](https://docs.molt.bot/reference/templates/IDENTITY)
-- [Templates: SOUL](https://docs.molt.bot/reference/templates/SOUL)
-- [Templates: TOOLS](https://docs.molt.bot/reference/templates/TOOLS)
-- [Templates: USER](https://docs.molt.bot/reference/templates/USER)
+### Interactuar con el Agente
 
-## Platform internals
+```bash
+# Modo interactivo
+moltbot agent --message "¿Cuál es el clima hoy?"
 
-- [macOS dev setup](https://docs.molt.bot/platforms/mac/dev-setup)
-- [macOS menu bar](https://docs.molt.bot/platforms/mac/menu-bar)
-- [macOS voice wake](https://docs.molt.bot/platforms/mac/voicewake)
-- [iOS node](https://docs.molt.bot/platforms/ios)
-- [Android node](https://docs.molt.bot/platforms/android)
-- [Windows (WSL2)](https://docs.molt.bot/platforms/windows)
-- [Linux app](https://docs.molt.bot/platforms/linux)
+# Con modo de thinking alto
+moltbot agent --message "Analiza este documento" --thinking high
 
-## Email hooks (Gmail)
+# Ejecutar comando y devolver resultado al canal
+moltbot agent --message "Lista archivos en /home" --reply-back telegram
+```
 
-- [docs.molt.bot/gmail-pubsub](https://docs.molt.bot/automation/gmail-pubsub)
+### Gestionar Canales
 
-## Molty
+```bash
+# Ver estado de todos los canales
+moltbot channels status
 
-Moltbot was built for **Molty**, a space lobster AI assistant. 🦞
-by Peter Steinberger and the community.
+# Ver estado con verificación de conexión
+moltbot channels status --probe
 
-- [clawd.me](https://clawd.me)
-- [soul.md](https://soul.md)
-- [steipete.me](https://steipete.me)
-- [@moltbot](https://x.com/moltbot)
+# Ver estado de un canal específico
+moltbot channels status whatsapp
 
-## Community
+# Reiniciar un canal
+moltbot channels restart telegram
+```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines, maintainers, and how to submit PRs.
-AI/vibe-coded PRs welcome! 🤖
+### Gestionar Emparejamiento
 
-Special thanks to [Mario Zechner](https://mariozechner.at/) for his support and for
-[pi-mono](https://github.com/badlogic/pi-mono).
+```bash
+# Listar solicitudes de emparejamiento pendientes
+moltbot pairing list
 
-Thanks to all clawtributors:
+# Aprobar un emparejamiento
+moltbot pairing approve telegram ABC123
 
-<p align="left">
-  <a href="https://github.com/steipete"><img src="https://avatars.githubusercontent.com/u/58493?v=4&s=48" width="48" height="48" alt="steipete" title="steipete"/></a> <a href="https://github.com/plum-dawg"><img src="https://avatars.githubusercontent.com/u/5909950?v=4&s=48" width="48" height="48" alt="plum-dawg" title="plum-dawg"/></a> <a href="https://github.com/bohdanpodvirnyi"><img src="https://avatars.githubusercontent.com/u/31819391?v=4&s=48" width="48" height="48" alt="bohdanpodvirnyi" title="bohdanpodvirnyi"/></a> <a href="https://github.com/iHildy"><img src="https://avatars.githubusercontent.com/u/25069719?v=4&s=48" width="48" height="48" alt="iHildy" title="iHildy"/></a> <a href="https://github.com/jaydenfyi"><img src="https://avatars.githubusercontent.com/u/213395523?v=4&s=48" width="48" height="48" alt="jaydenfyi" title="jaydenfyi"/></a> <a href="https://github.com/joaohlisboa"><img src="https://avatars.githubusercontent.com/u/8200873?v=4&s=48" width="48" height="48" alt="joaohlisboa" title="joaohlisboa"/></a> <a href="https://github.com/mneves75"><img src="https://avatars.githubusercontent.com/u/2423436?v=4&s=48" width="48" height="48" alt="mneves75" title="mneves75"/></a> <a href="https://github.com/MatthieuBizien"><img src="https://avatars.githubusercontent.com/u/173090?v=4&s=48" width="48" height="48" alt="MatthieuBizien" title="MatthieuBizien"/></a> <a href="https://github.com/MaudeBot"><img src="https://avatars.githubusercontent.com/u/255777700?v=4&s=48" width="48" height="48" alt="MaudeBot" title="MaudeBot"/></a> <a href="https://github.com/Glucksberg"><img src="https://avatars.githubusercontent.com/u/80581902?v=4&s=48" width="48" height="48" alt="Glucksberg" title="Glucksberg"/></a>
-  <a href="https://github.com/rahthakor"><img src="https://avatars.githubusercontent.com/u/8470553?v=4&s=48" width="48" height="48" alt="rahthakor" title="rahthakor"/></a> <a href="https://github.com/vrknetha"><img src="https://avatars.githubusercontent.com/u/20596261?v=4&s=48" width="48" height="48" alt="vrknetha" title="vrknetha"/></a> <a href="https://github.com/radek-paclt"><img src="https://avatars.githubusercontent.com/u/50451445?v=4&s=48" width="48" height="48" alt="radek-paclt" title="radek-paclt"/></a> <a href="https://github.com/vignesh07"><img src="https://avatars.githubusercontent.com/u/1436853?v=4&s=48" width="48" height="48" alt="vignesh07" title="vignesh07"/></a> <a href="https://github.com/tobiasbischoff"><img src="https://avatars.githubusercontent.com/u/711564?v=4&s=48" width="48" height="48" alt="Tobias Bischoff" title="Tobias Bischoff"/></a> <a href="https://github.com/joshp123"><img src="https://avatars.githubusercontent.com/u/1497361?v=4&s=48" width="48" height="48" alt="joshp123" title="joshp123"/></a> <a href="https://github.com/czekaj"><img src="https://avatars.githubusercontent.com/u/1464539?v=4&s=48" width="48" height="48" alt="czekaj" title="czekaj"/></a> <a href="https://github.com/mukhtharcm"><img src="https://avatars.githubusercontent.com/u/56378562?v=4&s=48" width="48" height="48" alt="mukhtharcm" title="mukhtharcm"/></a> <a href="https://github.com/sebslight"><img src="https://avatars.githubusercontent.com/u/19554889?v=4&s=48" width="48" height="48" alt="sebslight" title="sebslight"/></a> <a href="https://github.com/maxsumrall"><img src="https://avatars.githubusercontent.com/u/628843?v=4&s=48" width="48" height="48" alt="maxsumrall" title="maxsumrall"/></a>
-  <a href="https://github.com/xadenryan"><img src="https://avatars.githubusercontent.com/u/165437834?v=4&s=48" width="48" height="48" alt="xadenryan" title="xadenryan"/></a> <a href="https://github.com/rodrigouroz"><img src="https://avatars.githubusercontent.com/u/384037?v=4&s=48" width="48" height="48" alt="rodrigouroz" title="rodrigouroz"/></a> <a href="https://github.com/juanpablodlc"><img src="https://avatars.githubusercontent.com/u/92012363?v=4&s=48" width="48" height="48" alt="juanpablodlc" title="juanpablodlc"/></a> <a href="https://github.com/hsrvc"><img src="https://avatars.githubusercontent.com/u/129702169?v=4&s=48" width="48" height="48" alt="hsrvc" title="hsrvc"/></a> <a href="https://github.com/magimetal"><img src="https://avatars.githubusercontent.com/u/36491250?v=4&s=48" width="48" height="48" alt="magimetal" title="magimetal"/></a> <a href="https://github.com/zerone0x"><img src="https://avatars.githubusercontent.com/u/39543393?v=4&s=48" width="48" height="48" alt="zerone0x" title="zerone0x"/></a> <a href="https://github.com/tyler6204"><img src="https://avatars.githubusercontent.com/u/64381258?v=4&s=48" width="48" height="48" alt="tyler6204" title="tyler6204"/></a> <a href="https://github.com/meaningfool"><img src="https://avatars.githubusercontent.com/u/2862331?v=4&s=48" width="48" height="48" alt="meaningfool" title="meaningfool"/></a> <a href="https://github.com/patelhiren"><img src="https://avatars.githubusercontent.com/u/172098?v=4&s=48" width="48" height="48" alt="patelhiren" title="patelhiren"/></a> <a href="https://github.com/NicholasSpisak"><img src="https://avatars.githubusercontent.com/u/129075147?v=4&s=48" width="48" height="48" alt="NicholasSpisak" title="NicholasSpisak"/></a>
-  <a href="https://github.com/jonisjongithub"><img src="https://avatars.githubusercontent.com/u/86072337?v=4&s=48" width="48" height="48" alt="jonisjongithub" title="jonisjongithub"/></a> <a href="https://github.com/AbhisekBasu1"><img src="https://avatars.githubusercontent.com/u/40645221?v=4&s=48" width="48" height="48" alt="abhisekbasu1" title="abhisekbasu1"/></a> <a href="https://github.com/jamesgroat"><img src="https://avatars.githubusercontent.com/u/2634024?v=4&s=48" width="48" height="48" alt="jamesgroat" title="jamesgroat"/></a> <a href="https://github.com/claude"><img src="https://avatars.githubusercontent.com/u/81847?v=4&s=48" width="48" height="48" alt="claude" title="claude"/></a> <a href="https://github.com/JustYannicc"><img src="https://avatars.githubusercontent.com/u/52761674?v=4&s=48" width="48" height="48" alt="JustYannicc" title="JustYannicc"/></a> <a href="https://github.com/mbelinky"><img src="https://avatars.githubusercontent.com/u/132747814?v=4&s=48" width="48" height="48" alt="Mariano Belinky" title="Mariano Belinky"/></a> <a href="https://github.com/Hyaxia"><img src="https://avatars.githubusercontent.com/u/36747317?v=4&s=48" width="48" height="48" alt="Hyaxia" title="Hyaxia"/></a> <a href="https://github.com/dantelex"><img src="https://avatars.githubusercontent.com/u/631543?v=4&s=48" width="48" height="48" alt="dantelex" title="dantelex"/></a> <a href="https://github.com/SocialNerd42069"><img src="https://avatars.githubusercontent.com/u/118244303?v=4&s=48" width="48" height="48" alt="SocialNerd42069" title="SocialNerd42069"/></a> <a href="https://github.com/daveonkels"><img src="https://avatars.githubusercontent.com/u/533642?v=4&s=48" width="48" height="48" alt="daveonkels" title="daveonkels"/></a>
-  <a href="https://github.com/apps/google-labs-jules"><img src="https://avatars.githubusercontent.com/in/842251?v=4&s=48" width="48" height="48" alt="google-labs-jules[bot]" title="google-labs-jules[bot]"/></a> <a href="https://github.com/lc0rp"><img src="https://avatars.githubusercontent.com/u/2609441?v=4&s=48" width="48" height="48" alt="lc0rp" title="lc0rp"/></a> <a href="https://github.com/mousberg"><img src="https://avatars.githubusercontent.com/u/57605064?v=4&s=48" width="48" height="48" alt="mousberg" title="mousberg"/></a> <a href="https://github.com/adam91holt"><img src="https://avatars.githubusercontent.com/u/9592417?v=4&s=48" width="48" height="48" alt="adam91holt" title="adam91holt"/></a> <a href="https://github.com/hougangdev"><img src="https://avatars.githubusercontent.com/u/105773686?v=4&s=48" width="48" height="48" alt="hougangdev" title="hougangdev"/></a> <a href="https://github.com/shakkernerd"><img src="https://avatars.githubusercontent.com/u/165377636?v=4&s=48" width="48" height="48" alt="shakkernerd" title="shakkernerd"/></a> <a href="https://github.com/gumadeiras"><img src="https://avatars.githubusercontent.com/u/5599352?v=4&s=48" width="48" height="48" alt="gumadeiras" title="gumadeiras"/></a> <a href="https://github.com/mteam88"><img src="https://avatars.githubusercontent.com/u/84196639?v=4&s=48" width="48" height="48" alt="mteam88" title="mteam88"/></a> <a href="https://github.com/hirefrank"><img src="https://avatars.githubusercontent.com/u/183158?v=4&s=48" width="48" height="48" alt="hirefrank" title="hirefrank"/></a> <a href="https://github.com/joeynyc"><img src="https://avatars.githubusercontent.com/u/17919866?v=4&s=48" width="48" height="48" alt="joeynyc" title="joeynyc"/></a>
-  <a href="https://github.com/orlyjamie"><img src="https://avatars.githubusercontent.com/u/6668807?v=4&s=48" width="48" height="48" alt="orlyjamie" title="orlyjamie"/></a> <a href="https://github.com/dbhurley"><img src="https://avatars.githubusercontent.com/u/5251425?v=4&s=48" width="48" height="48" alt="dbhurley" title="dbhurley"/></a> <a href="https://github.com/omniwired"><img src="https://avatars.githubusercontent.com/u/322761?v=4&s=48" width="48" height="48" alt="Eng. Juan Combetto" title="Eng. Juan Combetto"/></a> <a href="https://github.com/TSavo"><img src="https://avatars.githubusercontent.com/u/877990?v=4&s=48" width="48" height="48" alt="TSavo" title="TSavo"/></a> <a href="https://github.com/julianengel"><img src="https://avatars.githubusercontent.com/u/10634231?v=4&s=48" width="48" height="48" alt="julianengel" title="julianengel"/></a> <a href="https://github.com/bradleypriest"><img src="https://avatars.githubusercontent.com/u/167215?v=4&s=48" width="48" height="48" alt="bradleypriest" title="bradleypriest"/></a> <a href="https://github.com/benithors"><img src="https://avatars.githubusercontent.com/u/20652882?v=4&s=48" width="48" height="48" alt="benithors" title="benithors"/></a> <a href="https://github.com/rohannagpal"><img src="https://avatars.githubusercontent.com/u/4009239?v=4&s=48" width="48" height="48" alt="rohannagpal" title="rohannagpal"/></a> <a href="https://github.com/timolins"><img src="https://avatars.githubusercontent.com/u/1440854?v=4&s=48" width="48" height="48" alt="timolins" title="timolins"/></a> <a href="https://github.com/f-trycua"><img src="https://avatars.githubusercontent.com/u/195596869?v=4&s=48" width="48" height="48" alt="f-trycua" title="f-trycua"/></a>
-  <a href="https://github.com/benostein"><img src="https://avatars.githubusercontent.com/u/31802821?v=4&s=48" width="48" height="48" alt="benostein" title="benostein"/></a> <a href="https://github.com/elliotsecops"><img src="https://avatars.githubusercontent.com/u/141947839?v=4&s=48" width="48" height="48" alt="elliotsecops" title="elliotsecops"/></a> <a href="https://github.com/Nachx639"><img src="https://avatars.githubusercontent.com/u/71144023?v=4&s=48" width="48" height="48" alt="nachx639" title="nachx639"/></a> <a href="https://github.com/pvoo"><img src="https://avatars.githubusercontent.com/u/20116814?v=4&s=48" width="48" height="48" alt="pvoo" title="pvoo"/></a> <a href="https://github.com/sreekaransrinath"><img src="https://avatars.githubusercontent.com/u/50989977?v=4&s=48" width="48" height="48" alt="sreekaransrinath" title="sreekaransrinath"/></a> <a href="https://github.com/gupsammy"><img src="https://avatars.githubusercontent.com/u/20296019?v=4&s=48" width="48" height="48" alt="gupsammy" title="gupsammy"/></a> <a href="https://github.com/cristip73"><img src="https://avatars.githubusercontent.com/u/24499421?v=4&s=48" width="48" height="48" alt="cristip73" title="cristip73"/></a> <a href="https://github.com/stefangalescu"><img src="https://avatars.githubusercontent.com/u/52995748?v=4&s=48" width="48" height="48" alt="stefangalescu" title="stefangalescu"/></a> <a href="https://github.com/nachoiacovino"><img src="https://avatars.githubusercontent.com/u/50103937?v=4&s=48" width="48" height="48" alt="nachoiacovino" title="nachoiacovino"/></a> <a href="https://github.com/vsabavat"><img src="https://avatars.githubusercontent.com/u/50385532?v=4&s=48" width="48" height="48" alt="Vasanth Rao Naik Sabavat" title="Vasanth Rao Naik Sabavat"/></a>
-  <a href="https://github.com/petter-b"><img src="https://avatars.githubusercontent.com/u/62076402?v=4&s=48" width="48" height="48" alt="petter-b" title="petter-b"/></a> <a href="https://github.com/thewilloftheshadow"><img src="https://avatars.githubusercontent.com/u/35580099?v=4&s=48" width="48" height="48" alt="thewilloftheshadow" title="thewilloftheshadow"/></a> <a href="https://github.com/cpojer"><img src="https://avatars.githubusercontent.com/u/13352?v=4&s=48" width="48" height="48" alt="cpojer" title="cpojer"/></a> <a href="https://github.com/scald"><img src="https://avatars.githubusercontent.com/u/1215913?v=4&s=48" width="48" height="48" alt="scald" title="scald"/></a> <a href="https://github.com/andranik-sahakyan"><img src="https://avatars.githubusercontent.com/u/8908029?v=4&s=48" width="48" height="48" alt="andranik-sahakyan" title="andranik-sahakyan"/></a> <a href="https://github.com/davidguttman"><img src="https://avatars.githubusercontent.com/u/431696?v=4&s=48" width="48" height="48" alt="davidguttman" title="davidguttman"/></a> <a href="https://github.com/sleontenko"><img src="https://avatars.githubusercontent.com/u/7135949?v=4&s=48" width="48" height="48" alt="sleontenko" title="sleontenko"/></a> <a href="https://github.com/denysvitali"><img src="https://avatars.githubusercontent.com/u/4939519?v=4&s=48" width="48" height="48" alt="denysvitali" title="denysvitali"/></a> <a href="https://github.com/sircrumpet"><img src="https://avatars.githubusercontent.com/u/4436535?v=4&s=48" width="48" height="48" alt="sircrumpet" title="sircrumpet"/></a> <a href="https://github.com/peschee"><img src="https://avatars.githubusercontent.com/u/63866?v=4&s=48" width="48" height="48" alt="peschee" title="peschee"/></a>
-  <a href="https://github.com/nonggialiang"><img src="https://avatars.githubusercontent.com/u/14367839?v=4&s=48" width="48" height="48" alt="nonggialiang" title="nonggialiang"/></a> <a href="https://github.com/rafaelreis-r"><img src="https://avatars.githubusercontent.com/u/57492577?v=4&s=48" width="48" height="48" alt="rafaelreis-r" title="rafaelreis-r"/></a> <a href="https://github.com/dominicnunez"><img src="https://avatars.githubusercontent.com/u/43616264?v=4&s=48" width="48" height="48" alt="dominicnunez" title="dominicnunez"/></a> <a href="https://github.com/lploc94"><img src="https://avatars.githubusercontent.com/u/28453843?v=4&s=48" width="48" height="48" alt="lploc94" title="lploc94"/></a> <a href="https://github.com/ratulsarna"><img src="https://avatars.githubusercontent.com/u/105903728?v=4&s=48" width="48" height="48" alt="ratulsarna" title="ratulsarna"/></a> <a href="https://github.com/lutr0"><img src="https://avatars.githubusercontent.com/u/76906369?v=4&s=48" width="48" height="48" alt="lutr0" title="lutr0"/></a> <a href="https://github.com/danielz1z"><img src="https://avatars.githubusercontent.com/u/235270390?v=4&s=48" width="48" height="48" alt="danielz1z" title="danielz1z"/></a> <a href="https://github.com/AdeboyeDN"><img src="https://avatars.githubusercontent.com/u/65312338?v=4&s=48" width="48" height="48" alt="AdeboyeDN" title="AdeboyeDN"/></a> <a href="https://github.com/Alg0rix"><img src="https://avatars.githubusercontent.com/u/53804949?v=4&s=48" width="48" height="48" alt="Alg0rix" title="Alg0rix"/></a> <a href="https://github.com/papago2355"><img src="https://avatars.githubusercontent.com/u/68721273?v=4&s=48" width="48" height="48" alt="papago2355" title="papago2355"/></a>
-  <a href="https://github.com/emanuelst"><img src="https://avatars.githubusercontent.com/u/9994339?v=4&s=48" width="48" height="48" alt="emanuelst" title="emanuelst"/></a> <a href="https://github.com/KristijanJovanovski"><img src="https://avatars.githubusercontent.com/u/8942284?v=4&s=48" width="48" height="48" alt="KristijanJovanovski" title="KristijanJovanovski"/></a> <a href="https://github.com/rdev"><img src="https://avatars.githubusercontent.com/u/8418866?v=4&s=48" width="48" height="48" alt="rdev" title="rdev"/></a> <a href="https://github.com/rhuanssauro"><img src="https://avatars.githubusercontent.com/u/164682191?v=4&s=48" width="48" height="48" alt="rhuanssauro" title="rhuanssauro"/></a> <a href="https://github.com/joshrad-dev"><img src="https://avatars.githubusercontent.com/u/62785552?v=4&s=48" width="48" height="48" alt="joshrad-dev" title="joshrad-dev"/></a> <a href="https://github.com/kiranjd"><img src="https://avatars.githubusercontent.com/u/25822851?v=4&s=48" width="48" height="48" alt="kiranjd" title="kiranjd"/></a> <a href="https://github.com/osolmaz"><img src="https://avatars.githubusercontent.com/u/2453968?v=4&s=48" width="48" height="48" alt="osolmaz" title="osolmaz"/></a> <a href="https://github.com/adityashaw2"><img src="https://avatars.githubusercontent.com/u/41204444?v=4&s=48" width="48" height="48" alt="adityashaw2" title="adityashaw2"/></a> <a href="https://github.com/CashWilliams"><img src="https://avatars.githubusercontent.com/u/613573?v=4&s=48" width="48" height="48" alt="CashWilliams" title="CashWilliams"/></a> <a href="https://github.com/search?q=sheeek"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="sheeek" title="sheeek"/></a>
-  <a href="https://github.com/ryancontent"><img src="https://avatars.githubusercontent.com/u/39743613?v=4&s=48" width="48" height="48" alt="ryancontent" title="ryancontent"/></a> <a href="https://github.com/artuskg"><img src="https://avatars.githubusercontent.com/u/11966157?v=4&s=48" width="48" height="48" alt="artuskg" title="artuskg"/></a> <a href="https://github.com/Takhoffman"><img src="https://avatars.githubusercontent.com/u/781889?v=4&s=48" width="48" height="48" alt="Takhoffman" title="Takhoffman"/></a> <a href="https://github.com/onutc"><img src="https://avatars.githubusercontent.com/u/152018508?v=4&s=48" width="48" height="48" alt="onutc" title="onutc"/></a> <a href="https://github.com/pauloportella"><img src="https://avatars.githubusercontent.com/u/22947229?v=4&s=48" width="48" height="48" alt="pauloportella" title="pauloportella"/></a> <a href="https://github.com/neooriginal"><img src="https://avatars.githubusercontent.com/u/54811660?v=4&s=48" width="48" height="48" alt="neooriginal" title="neooriginal"/></a> <a href="https://github.com/ManuelHettich"><img src="https://avatars.githubusercontent.com/u/17690367?v=4&s=48" width="48" height="48" alt="manuelhettich" title="manuelhettich"/></a> <a href="https://github.com/minghinmatthewlam"><img src="https://avatars.githubusercontent.com/u/14224566?v=4&s=48" width="48" height="48" alt="minghinmatthewlam" title="minghinmatthewlam"/></a> <a href="https://github.com/myfunc"><img src="https://avatars.githubusercontent.com/u/19294627?v=4&s=48" width="48" height="48" alt="myfunc" title="myfunc"/></a> <a href="https://github.com/travisirby"><img src="https://avatars.githubusercontent.com/u/5958376?v=4&s=48" width="48" height="48" alt="travisirby" title="travisirby"/></a>
-  <a href="https://github.com/obviyus"><img src="https://avatars.githubusercontent.com/u/22031114?v=4&s=48" width="48" height="48" alt="obviyus" title="obviyus"/></a> <a href="https://github.com/buddyh"><img src="https://avatars.githubusercontent.com/u/31752869?v=4&s=48" width="48" height="48" alt="buddyh" title="buddyh"/></a> <a href="https://github.com/connorshea"><img src="https://avatars.githubusercontent.com/u/2977353?v=4&s=48" width="48" height="48" alt="connorshea" title="connorshea"/></a> <a href="https://github.com/kyleok"><img src="https://avatars.githubusercontent.com/u/58307870?v=4&s=48" width="48" height="48" alt="kyleok" title="kyleok"/></a> <a href="https://github.com/mcinteerj"><img src="https://avatars.githubusercontent.com/u/3613653?v=4&s=48" width="48" height="48" alt="mcinteerj" title="mcinteerj"/></a> <a href="https://github.com/apps/dependabot"><img src="https://avatars.githubusercontent.com/in/29110?v=4&s=48" width="48" height="48" alt="dependabot[bot]" title="dependabot[bot]"/></a> <a href="https://github.com/John-Rood"><img src="https://avatars.githubusercontent.com/u/62669593?v=4&s=48" width="48" height="48" alt="John-Rood" title="John-Rood"/></a> <a href="https://github.com/timkrase"><img src="https://avatars.githubusercontent.com/u/38947626?v=4&s=48" width="48" height="48" alt="timkrase" title="timkrase"/></a> <a href="https://github.com/uos-status"><img src="https://avatars.githubusercontent.com/u/255712580?v=4&s=48" width="48" height="48" alt="uos-status" title="uos-status"/></a> <a href="https://github.com/gerardward2007"><img src="https://avatars.githubusercontent.com/u/3002155?v=4&s=48" width="48" height="48" alt="gerardward2007" title="gerardward2007"/></a>
-  <a href="https://github.com/roshanasingh4"><img src="https://avatars.githubusercontent.com/u/88576930?v=4&s=48" width="48" height="48" alt="roshanasingh4" title="roshanasingh4"/></a> <a href="https://github.com/tosh-hamburg"><img src="https://avatars.githubusercontent.com/u/58424326?v=4&s=48" width="48" height="48" alt="tosh-hamburg" title="tosh-hamburg"/></a> <a href="https://github.com/azade-c"><img src="https://avatars.githubusercontent.com/u/252790079?v=4&s=48" width="48" height="48" alt="azade-c" title="azade-c"/></a> <a href="https://github.com/dlauer"><img src="https://avatars.githubusercontent.com/u/757041?v=4&s=48" width="48" height="48" alt="dlauer" title="dlauer"/></a> <a href="https://github.com/JonUleis"><img src="https://avatars.githubusercontent.com/u/7644941?v=4&s=48" width="48" height="48" alt="JonUleis" title="JonUleis"/></a> <a href="https://github.com/shivamraut101"><img src="https://avatars.githubusercontent.com/u/110457469?v=4&s=48" width="48" height="48" alt="shivamraut101" title="shivamraut101"/></a> <a href="https://github.com/bjesuiter"><img src="https://avatars.githubusercontent.com/u/2365676?v=4&s=48" width="48" height="48" alt="bjesuiter" title="bjesuiter"/></a> <a href="https://github.com/cheeeee"><img src="https://avatars.githubusercontent.com/u/21245729?v=4&s=48" width="48" height="48" alt="cheeeee" title="cheeeee"/></a> <a href="https://github.com/robbyczgw-cla"><img src="https://avatars.githubusercontent.com/u/239660374?v=4&s=48" width="48" height="48" alt="robbyczgw-cla" title="robbyczgw-cla"/></a> <a href="https://github.com/j1philli"><img src="https://avatars.githubusercontent.com/u/3744255?v=4&s=48" width="48" height="48" alt="Josh Phillips" title="Josh Phillips"/></a>
-  <a href="https://github.com/YuriNachos"><img src="https://avatars.githubusercontent.com/u/19365375?v=4&s=48" width="48" height="48" alt="YuriNachos" title="YuriNachos"/></a> <a href="https://github.com/pookNast"><img src="https://avatars.githubusercontent.com/u/14242552?v=4&s=48" width="48" height="48" alt="pookNast" title="pookNast"/></a> <a href="https://github.com/Whoaa512"><img src="https://avatars.githubusercontent.com/u/1581943?v=4&s=48" width="48" height="48" alt="Whoaa512" title="Whoaa512"/></a> <a href="https://github.com/chriseidhof"><img src="https://avatars.githubusercontent.com/u/5382?v=4&s=48" width="48" height="48" alt="chriseidhof" title="chriseidhof"/></a> <a href="https://github.com/ngutman"><img src="https://avatars.githubusercontent.com/u/1540134?v=4&s=48" width="48" height="48" alt="ngutman" title="ngutman"/></a> <a href="https://github.com/ysqander"><img src="https://avatars.githubusercontent.com/u/80843820?v=4&s=48" width="48" height="48" alt="ysqander" title="ysqander"/></a> <a href="https://github.com/aj47"><img src="https://avatars.githubusercontent.com/u/8023513?v=4&s=48" width="48" height="48" alt="aj47" title="aj47"/></a> <a href="https://github.com/kennyklee"><img src="https://avatars.githubusercontent.com/u/1432489?v=4&s=48" width="48" height="48" alt="kennyklee" title="kennyklee"/></a> <a href="https://github.com/superman32432432"><img src="https://avatars.githubusercontent.com/u/7228420?v=4&s=48" width="48" height="48" alt="superman32432432" title="superman32432432"/></a> <a href="https://github.com/search?q=Yurii%20Chukhlib"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Yurii Chukhlib" title="Yurii Chukhlib"/></a>
-  <a href="https://github.com/grp06"><img src="https://avatars.githubusercontent.com/u/1573959?v=4&s=48" width="48" height="48" alt="grp06" title="grp06"/></a> <a href="https://github.com/antons"><img src="https://avatars.githubusercontent.com/u/129705?v=4&s=48" width="48" height="48" alt="antons" title="antons"/></a> <a href="https://github.com/austinm911"><img src="https://avatars.githubusercontent.com/u/31991302?v=4&s=48" width="48" height="48" alt="austinm911" title="austinm911"/></a> <a href="https://github.com/apps/blacksmith-sh"><img src="https://avatars.githubusercontent.com/in/807020?v=4&s=48" width="48" height="48" alt="blacksmith-sh[bot]" title="blacksmith-sh[bot]"/></a> <a href="https://github.com/damoahdominic"><img src="https://avatars.githubusercontent.com/u/4623434?v=4&s=48" width="48" height="48" alt="damoahdominic" title="damoahdominic"/></a> <a href="https://github.com/dan-dr"><img src="https://avatars.githubusercontent.com/u/6669808?v=4&s=48" width="48" height="48" alt="dan-dr" title="dan-dr"/></a> <a href="https://github.com/HeimdallStrategy"><img src="https://avatars.githubusercontent.com/u/223014405?v=4&s=48" width="48" height="48" alt="HeimdallStrategy" title="HeimdallStrategy"/></a> <a href="https://github.com/imfing"><img src="https://avatars.githubusercontent.com/u/5097752?v=4&s=48" width="48" height="48" alt="imfing" title="imfing"/></a> <a href="https://github.com/jalehman"><img src="https://avatars.githubusercontent.com/u/550978?v=4&s=48" width="48" height="48" alt="jalehman" title="jalehman"/></a> <a href="https://github.com/jarvis-medmatic"><img src="https://avatars.githubusercontent.com/u/252428873?v=4&s=48" width="48" height="48" alt="jarvis-medmatic" title="jarvis-medmatic"/></a>
-  <a href="https://github.com/kkarimi"><img src="https://avatars.githubusercontent.com/u/875218?v=4&s=48" width="48" height="48" alt="kkarimi" title="kkarimi"/></a> <a href="https://github.com/mahmoudashraf93"><img src="https://avatars.githubusercontent.com/u/9130129?v=4&s=48" width="48" height="48" alt="mahmoudashraf93" title="mahmoudashraf93"/></a> <a href="https://github.com/pkrmf"><img src="https://avatars.githubusercontent.com/u/1714267?v=4&s=48" width="48" height="48" alt="pkrmf" title="pkrmf"/></a> <a href="https://github.com/RandyVentures"><img src="https://avatars.githubusercontent.com/u/149904821?v=4&s=48" width="48" height="48" alt="RandyVentures" title="RandyVentures"/></a> <a href="https://github.com/search?q=Ryan%20Lisse"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Ryan Lisse" title="Ryan Lisse"/></a> <a href="https://github.com/dougvk"><img src="https://avatars.githubusercontent.com/u/401660?v=4&s=48" width="48" height="48" alt="dougvk" title="dougvk"/></a> <a href="https://github.com/erikpr1994"><img src="https://avatars.githubusercontent.com/u/6299331?v=4&s=48" width="48" height="48" alt="erikpr1994" title="erikpr1994"/></a> <a href="https://github.com/fal3"><img src="https://avatars.githubusercontent.com/u/6484295?v=4&s=48" width="48" height="48" alt="fal3" title="fal3"/></a> <a href="https://github.com/search?q=Ghost"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Ghost" title="Ghost"/></a> <a href="https://github.com/jonasjancarik"><img src="https://avatars.githubusercontent.com/u/2459191?v=4&s=48" width="48" height="48" alt="jonasjancarik" title="jonasjancarik"/></a>
-  <a href="https://github.com/search?q=Keith%20the%20Silly%20Goose"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Keith the Silly Goose" title="Keith the Silly Goose"/></a> <a href="https://github.com/search?q=L36%20Server"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="L36 Server" title="L36 Server"/></a> <a href="https://github.com/search?q=Marc"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Marc" title="Marc"/></a> <a href="https://github.com/mitschabaude-bot"><img src="https://avatars.githubusercontent.com/u/247582884?v=4&s=48" width="48" height="48" alt="mitschabaude-bot" title="mitschabaude-bot"/></a> <a href="https://github.com/mkbehr"><img src="https://avatars.githubusercontent.com/u/1285?v=4&s=48" width="48" height="48" alt="mkbehr" title="mkbehr"/></a> <a href="https://github.com/neist"><img src="https://avatars.githubusercontent.com/u/1029724?v=4&s=48" width="48" height="48" alt="neist" title="neist"/></a> <a href="https://github.com/sibbl"><img src="https://avatars.githubusercontent.com/u/866535?v=4&s=48" width="48" height="48" alt="sibbl" title="sibbl"/></a> <a href="https://github.com/chrisrodz"><img src="https://avatars.githubusercontent.com/u/2967620?v=4&s=48" width="48" height="48" alt="chrisrodz" title="chrisrodz"/></a> <a href="https://github.com/search?q=Friederike%20Seiler"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Friederike Seiler" title="Friederike Seiler"/></a> <a href="https://github.com/gabriel-trigo"><img src="https://avatars.githubusercontent.com/u/38991125?v=4&s=48" width="48" height="48" alt="gabriel-trigo" title="gabriel-trigo"/></a>
-  <a href="https://github.com/Iamadig"><img src="https://avatars.githubusercontent.com/u/102129234?v=4&s=48" width="48" height="48" alt="iamadig" title="iamadig"/></a> <a href="https://github.com/jdrhyne"><img src="https://avatars.githubusercontent.com/u/7828464?v=4&s=48" width="48" height="48" alt="Jonathan D. Rhyne (DJ-D)" title="Jonathan D. Rhyne (DJ-D)"/></a> <a href="https://github.com/search?q=Joshua%20Mitchell"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Joshua Mitchell" title="Joshua Mitchell"/></a> <a href="https://github.com/search?q=Kit"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Kit" title="Kit"/></a> <a href="https://github.com/koala73"><img src="https://avatars.githubusercontent.com/u/996596?v=4&s=48" width="48" height="48" alt="koala73" title="koala73"/></a> <a href="https://github.com/manmal"><img src="https://avatars.githubusercontent.com/u/142797?v=4&s=48" width="48" height="48" alt="manmal" title="manmal"/></a> <a href="https://github.com/ogulcancelik"><img src="https://avatars.githubusercontent.com/u/7064011?v=4&s=48" width="48" height="48" alt="ogulcancelik" title="ogulcancelik"/></a> <a href="https://github.com/pasogott"><img src="https://avatars.githubusercontent.com/u/23458152?v=4&s=48" width="48" height="48" alt="pasogott" title="pasogott"/></a> <a href="https://github.com/petradonka"><img src="https://avatars.githubusercontent.com/u/7353770?v=4&s=48" width="48" height="48" alt="petradonka" title="petradonka"/></a> <a href="https://github.com/rubyrunsstuff"><img src="https://avatars.githubusercontent.com/u/246602379?v=4&s=48" width="48" height="48" alt="rubyrunsstuff" title="rubyrunsstuff"/></a>
-  <a href="https://github.com/siddhantjain"><img src="https://avatars.githubusercontent.com/u/4835232?v=4&s=48" width="48" height="48" alt="siddhantjain" title="siddhantjain"/></a> <a href="https://github.com/suminhthanh"><img src="https://avatars.githubusercontent.com/u/2907636?v=4&s=48" width="48" height="48" alt="suminhthanh" title="suminhthanh"/></a> <a href="https://github.com/svkozak"><img src="https://avatars.githubusercontent.com/u/31941359?v=4&s=48" width="48" height="48" alt="svkozak" title="svkozak"/></a> <a href="https://github.com/VACInc"><img src="https://avatars.githubusercontent.com/u/3279061?v=4&s=48" width="48" height="48" alt="VACInc" title="VACInc"/></a> <a href="https://github.com/wes-davis"><img src="https://avatars.githubusercontent.com/u/16506720?v=4&s=48" width="48" height="48" alt="wes-davis" title="wes-davis"/></a> <a href="https://github.com/zats"><img src="https://avatars.githubusercontent.com/u/2688806?v=4&s=48" width="48" height="48" alt="zats" title="zats"/></a> <a href="https://github.com/24601"><img src="https://avatars.githubusercontent.com/u/1157207?v=4&s=48" width="48" height="48" alt="24601" title="24601"/></a> <a href="https://github.com/ameno-"><img src="https://avatars.githubusercontent.com/u/2416135?v=4&s=48" width="48" height="48" alt="ameno-" title="ameno-"/></a> <a href="https://github.com/search?q=Chris%20Taylor"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Chris Taylor" title="Chris Taylor"/></a> <a href="https://github.com/dguido"><img src="https://avatars.githubusercontent.com/u/294844?v=4&s=48" width="48" height="48" alt="dguido" title="dguido"/></a>
-  <a href="https://github.com/djangonavarro220"><img src="https://avatars.githubusercontent.com/u/251162586?v=4&s=48" width="48" height="48" alt="Django Navarro" title="Django Navarro"/></a> <a href="https://github.com/evalexpr"><img src="https://avatars.githubusercontent.com/u/23485511?v=4&s=48" width="48" height="48" alt="evalexpr" title="evalexpr"/></a> <a href="https://github.com/henrino3"><img src="https://avatars.githubusercontent.com/u/4260288?v=4&s=48" width="48" height="48" alt="henrino3" title="henrino3"/></a> <a href="https://github.com/humanwritten"><img src="https://avatars.githubusercontent.com/u/206531610?v=4&s=48" width="48" height="48" alt="humanwritten" title="humanwritten"/></a> <a href="https://github.com/larlyssa"><img src="https://avatars.githubusercontent.com/u/13128869?v=4&s=48" width="48" height="48" alt="larlyssa" title="larlyssa"/></a> <a href="https://github.com/Lukavyi"><img src="https://avatars.githubusercontent.com/u/1013690?v=4&s=48" width="48" height="48" alt="Lukavyi" title="Lukavyi"/></a> <a href="https://github.com/odysseus0"><img src="https://avatars.githubusercontent.com/u/8635094?v=4&s=48" width="48" height="48" alt="odysseus0" title="odysseus0"/></a> <a href="https://github.com/oswalpalash"><img src="https://avatars.githubusercontent.com/u/6431196?v=4&s=48" width="48" height="48" alt="oswalpalash" title="oswalpalash"/></a> <a href="https://github.com/pcty-nextgen-service-account"><img src="https://avatars.githubusercontent.com/u/112553441?v=4&s=48" width="48" height="48" alt="pcty-nextgen-service-account" title="pcty-nextgen-service-account"/></a> <a href="https://github.com/pi0"><img src="https://avatars.githubusercontent.com/u/5158436?v=4&s=48" width="48" height="48" alt="pi0" title="pi0"/></a>
-  <a href="https://github.com/rmorse"><img src="https://avatars.githubusercontent.com/u/853547?v=4&s=48" width="48" height="48" alt="rmorse" title="rmorse"/></a> <a href="https://github.com/search?q=Roopak%20Nijhara"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Roopak Nijhara" title="Roopak Nijhara"/></a> <a href="https://github.com/Syhids"><img src="https://avatars.githubusercontent.com/u/671202?v=4&s=48" width="48" height="48" alt="Syhids" title="Syhids"/></a> <a href="https://github.com/search?q=Aaron%20Konyer"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Aaron Konyer" title="Aaron Konyer"/></a> <a href="https://github.com/aaronveklabs"><img src="https://avatars.githubusercontent.com/u/225997828?v=4&s=48" width="48" height="48" alt="aaronveklabs" title="aaronveklabs"/></a> <a href="https://github.com/andreabadesso"><img src="https://avatars.githubusercontent.com/u/3586068?v=4&s=48" width="48" height="48" alt="andreabadesso" title="andreabadesso"/></a> <a href="https://github.com/search?q=Andrii"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Andrii" title="Andrii"/></a> <a href="https://github.com/cash-echo-bot"><img src="https://avatars.githubusercontent.com/u/252747386?v=4&s=48" width="48" height="48" alt="cash-echo-bot" title="cash-echo-bot"/></a> <a href="https://github.com/search?q=Clawd"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Clawd" title="Clawd"/></a> <a href="https://github.com/search?q=ClawdFx"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="ClawdFx" title="ClawdFx"/></a>
-  <a href="https://github.com/EnzeD"><img src="https://avatars.githubusercontent.com/u/9866900?v=4&s=48" width="48" height="48" alt="EnzeD" title="EnzeD"/></a> <a href="https://github.com/erik-agens"><img src="https://avatars.githubusercontent.com/u/80908960?v=4&s=48" width="48" height="48" alt="erik-agens" title="erik-agens"/></a> <a href="https://github.com/Evizero"><img src="https://avatars.githubusercontent.com/u/10854026?v=4&s=48" width="48" height="48" alt="Evizero" title="Evizero"/></a> <a href="https://github.com/fcatuhe"><img src="https://avatars.githubusercontent.com/u/17382215?v=4&s=48" width="48" height="48" alt="fcatuhe" title="fcatuhe"/></a> <a href="https://github.com/itsjaydesu"><img src="https://avatars.githubusercontent.com/u/220390?v=4&s=48" width="48" height="48" alt="itsjaydesu" title="itsjaydesu"/></a> <a href="https://github.com/ivancasco"><img src="https://avatars.githubusercontent.com/u/2452858?v=4&s=48" width="48" height="48" alt="ivancasco" title="ivancasco"/></a> <a href="https://github.com/ivanrvpereira"><img src="https://avatars.githubusercontent.com/u/183991?v=4&s=48" width="48" height="48" alt="ivanrvpereira" title="ivanrvpereira"/></a> <a href="https://github.com/search?q=Jarvis"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Jarvis" title="Jarvis"/></a> <a href="https://github.com/jayhickey"><img src="https://avatars.githubusercontent.com/u/1676460?v=4&s=48" width="48" height="48" alt="jayhickey" title="jayhickey"/></a> <a href="https://github.com/jeffersonwarrior"><img src="https://avatars.githubusercontent.com/u/89030989?v=4&s=48" width="48" height="48" alt="jeffersonwarrior" title="jeffersonwarrior"/></a>
-  <a href="https://github.com/search?q=jeffersonwarrior"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="jeffersonwarrior" title="jeffersonwarrior"/></a> <a href="https://github.com/jverdi"><img src="https://avatars.githubusercontent.com/u/345050?v=4&s=48" width="48" height="48" alt="jverdi" title="jverdi"/></a> <a href="https://github.com/longmaba"><img src="https://avatars.githubusercontent.com/u/9361500?v=4&s=48" width="48" height="48" alt="longmaba" title="longmaba"/></a> <a href="https://github.com/MarvinCui"><img src="https://avatars.githubusercontent.com/u/130876763?v=4&s=48" width="48" height="48" alt="MarvinCui" title="MarvinCui"/></a> <a href="https://github.com/mickahouan"><img src="https://avatars.githubusercontent.com/u/31423109?v=4&s=48" width="48" height="48" alt="mickahouan" title="mickahouan"/></a> <a href="https://github.com/mjrussell"><img src="https://avatars.githubusercontent.com/u/1641895?v=4&s=48" width="48" height="48" alt="mjrussell" title="mjrussell"/></a> <a href="https://github.com/odnxe"><img src="https://avatars.githubusercontent.com/u/403141?v=4&s=48" width="48" height="48" alt="odnxe" title="odnxe"/></a> <a href="https://github.com/p6l-richard"><img src="https://avatars.githubusercontent.com/u/18185649?v=4&s=48" width="48" height="48" alt="p6l-richard" title="p6l-richard"/></a> <a href="https://github.com/philipp-spiess"><img src="https://avatars.githubusercontent.com/u/458591?v=4&s=48" width="48" height="48" alt="philipp-spiess" title="philipp-spiess"/></a> <a href="https://github.com/search?q=Pocket%20Clawd"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Pocket Clawd" title="Pocket Clawd"/></a>
-  <a href="https://github.com/robaxelsen"><img src="https://avatars.githubusercontent.com/u/13132899?v=4&s=48" width="48" height="48" alt="robaxelsen" title="robaxelsen"/></a> <a href="https://github.com/search?q=Sash%20Catanzarite"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Sash Catanzarite" title="Sash Catanzarite"/></a> <a href="https://github.com/Suksham-sharma"><img src="https://avatars.githubusercontent.com/u/94667656?v=4&s=48" width="48" height="48" alt="Suksham-sharma" title="Suksham-sharma"/></a> <a href="https://github.com/T5-AndyML"><img src="https://avatars.githubusercontent.com/u/22801233?v=4&s=48" width="48" height="48" alt="T5-AndyML" title="T5-AndyML"/></a> <a href="https://github.com/tewatia"><img src="https://avatars.githubusercontent.com/u/22875334?v=4&s=48" width="48" height="48" alt="tewatia" title="tewatia"/></a> <a href="https://github.com/travisp"><img src="https://avatars.githubusercontent.com/u/165698?v=4&s=48" width="48" height="48" alt="travisp" title="travisp"/></a> <a href="https://github.com/search?q=VAC"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="VAC" title="VAC"/></a> <a href="https://github.com/search?q=william%20arzt"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="william arzt" title="william arzt"/></a> <a href="https://github.com/zknicker"><img src="https://avatars.githubusercontent.com/u/1164085?v=4&s=48" width="48" height="48" alt="zknicker" title="zknicker"/></a> <a href="https://github.com/0oAstro"><img src="https://avatars.githubusercontent.com/u/79555780?v=4&s=48" width="48" height="48" alt="0oAstro" title="0oAstro"/></a>
-  <a href="https://github.com/abhaymundhara"><img src="https://avatars.githubusercontent.com/u/62872231?v=4&s=48" width="48" height="48" alt="abhaymundhara" title="abhaymundhara"/></a> <a href="https://github.com/aduk059"><img src="https://avatars.githubusercontent.com/u/257603478?v=4&s=48" width="48" height="48" alt="aduk059" title="aduk059"/></a> <a href="https://github.com/search?q=alejandro%20maza"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="alejandro maza" title="alejandro maza"/></a> <a href="https://github.com/Alex-Alaniz"><img src="https://avatars.githubusercontent.com/u/88956822?v=4&s=48" width="48" height="48" alt="Alex-Alaniz" title="Alex-Alaniz"/></a> <a href="https://github.com/alexstyl"><img src="https://avatars.githubusercontent.com/u/1665273?v=4&s=48" width="48" height="48" alt="alexstyl" title="alexstyl"/></a> <a href="https://github.com/andrewting19"><img src="https://avatars.githubusercontent.com/u/10536704?v=4&s=48" width="48" height="48" alt="andrewting19" title="andrewting19"/></a> <a href="https://github.com/anpoirier"><img src="https://avatars.githubusercontent.com/u/1245729?v=4&s=48" width="48" height="48" alt="anpoirier" title="anpoirier"/></a> <a href="https://github.com/araa47"><img src="https://avatars.githubusercontent.com/u/22760261?v=4&s=48" width="48" height="48" alt="araa47" title="araa47"/></a> <a href="https://github.com/arthyn"><img src="https://avatars.githubusercontent.com/u/5466421?v=4&s=48" width="48" height="48" alt="arthyn" title="arthyn"/></a> <a href="https://github.com/Asleep123"><img src="https://avatars.githubusercontent.com/u/122379135?v=4&s=48" width="48" height="48" alt="Asleep123" title="Asleep123"/></a>
-  <a href="https://github.com/bguidolim"><img src="https://avatars.githubusercontent.com/u/987360?v=4&s=48" width="48" height="48" alt="bguidolim" title="bguidolim"/></a> <a href="https://github.com/bolismauro"><img src="https://avatars.githubusercontent.com/u/771999?v=4&s=48" width="48" height="48" alt="bolismauro" title="bolismauro"/></a> <a href="https://github.com/chenyuan99"><img src="https://avatars.githubusercontent.com/u/25518100?v=4&s=48" width="48" height="48" alt="chenyuan99" title="chenyuan99"/></a> <a href="https://github.com/search?q=Clawdbot%20Maintainers"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Clawdbot Maintainers" title="Clawdbot Maintainers"/></a> <a href="https://github.com/conhecendoia"><img src="https://avatars.githubusercontent.com/u/82890727?v=4&s=48" width="48" height="48" alt="conhecendoia" title="conhecendoia"/></a> <a href="https://github.com/dasilva333"><img src="https://avatars.githubusercontent.com/u/947827?v=4&s=48" width="48" height="48" alt="dasilva333" title="dasilva333"/></a> <a href="https://github.com/David-Marsh-Photo"><img src="https://avatars.githubusercontent.com/u/228404527?v=4&s=48" width="48" height="48" alt="David-Marsh-Photo" title="David-Marsh-Photo"/></a> <a href="https://github.com/search?q=Developer"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Developer" title="Developer"/></a> <a href="https://github.com/search?q=Dimitrios%20Ploutarchos"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Dimitrios Ploutarchos" title="Dimitrios Ploutarchos"/></a> <a href="https://github.com/search?q=Drake%20Thomsen"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Drake Thomsen" title="Drake Thomsen"/></a>
-  <a href="https://github.com/dylanneve1"><img src="https://avatars.githubusercontent.com/u/31746704?v=4&s=48" width="48" height="48" alt="dylanneve1" title="dylanneve1"/></a> <a href="https://github.com/search?q=Felix%20Krause"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Felix Krause" title="Felix Krause"/></a> <a href="https://github.com/foeken"><img src="https://avatars.githubusercontent.com/u/13864?v=4&s=48" width="48" height="48" alt="foeken" title="foeken"/></a> <a href="https://github.com/frankekn"><img src="https://avatars.githubusercontent.com/u/4488090?v=4&s=48" width="48" height="48" alt="frankekn" title="frankekn"/></a> <a href="https://github.com/search?q=ganghyun%20kim"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="ganghyun kim" title="ganghyun kim"/></a> <a href="https://github.com/grrowl"><img src="https://avatars.githubusercontent.com/u/907140?v=4&s=48" width="48" height="48" alt="grrowl" title="grrowl"/></a> <a href="https://github.com/gtsifrikas"><img src="https://avatars.githubusercontent.com/u/8904378?v=4&s=48" width="48" height="48" alt="gtsifrikas" title="gtsifrikas"/></a> <a href="https://github.com/HazAT"><img src="https://avatars.githubusercontent.com/u/363802?v=4&s=48" width="48" height="48" alt="HazAT" title="HazAT"/></a> <a href="https://github.com/hrdwdmrbl"><img src="https://avatars.githubusercontent.com/u/554881?v=4&s=48" width="48" height="48" alt="hrdwdmrbl" title="hrdwdmrbl"/></a> <a href="https://github.com/hugobarauna"><img src="https://avatars.githubusercontent.com/u/2719?v=4&s=48" width="48" height="48" alt="hugobarauna" title="hugobarauna"/></a>
-  <a href="https://github.com/search?q=Jamie%20Openshaw"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Jamie Openshaw" title="Jamie Openshaw"/></a> <a href="https://github.com/search?q=Jane"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Jane" title="Jane"/></a> <a href="https://github.com/search?q=Jarvis%20Deploy"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Jarvis Deploy" title="Jarvis Deploy"/></a> <a href="https://github.com/search?q=Jefferson%20Nunn"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Jefferson Nunn" title="Jefferson Nunn"/></a> <a href="https://github.com/jogi47"><img src="https://avatars.githubusercontent.com/u/1710139?v=4&s=48" width="48" height="48" alt="jogi47" title="jogi47"/></a> <a href="https://github.com/kentaro"><img src="https://avatars.githubusercontent.com/u/3458?v=4&s=48" width="48" height="48" alt="kentaro" title="kentaro"/></a> <a href="https://github.com/search?q=Kevin%20Lin"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Kevin Lin" title="Kevin Lin"/></a> <a href="https://github.com/kira-ariaki"><img src="https://avatars.githubusercontent.com/u/257352493?v=4&s=48" width="48" height="48" alt="kira-ariaki" title="kira-ariaki"/></a> <a href="https://github.com/kitze"><img src="https://avatars.githubusercontent.com/u/1160594?v=4&s=48" width="48" height="48" alt="kitze" title="kitze"/></a> <a href="https://github.com/Kiwitwitter"><img src="https://avatars.githubusercontent.com/u/25277769?v=4&s=48" width="48" height="48" alt="Kiwitwitter" title="Kiwitwitter"/></a>
-  <a href="https://github.com/levifig"><img src="https://avatars.githubusercontent.com/u/1605?v=4&s=48" width="48" height="48" alt="levifig" title="levifig"/></a> <a href="https://github.com/search?q=Lloyd"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Lloyd" title="Lloyd"/></a> <a href="https://github.com/longjos"><img src="https://avatars.githubusercontent.com/u/740160?v=4&s=48" width="48" height="48" alt="longjos" title="longjos"/></a> <a href="https://github.com/loukotal"><img src="https://avatars.githubusercontent.com/u/18210858?v=4&s=48" width="48" height="48" alt="loukotal" title="loukotal"/></a> <a href="https://github.com/louzhixian"><img src="https://avatars.githubusercontent.com/u/7994361?v=4&s=48" width="48" height="48" alt="louzhixian" title="louzhixian"/></a> <a href="https://github.com/martinpucik"><img src="https://avatars.githubusercontent.com/u/5503097?v=4&s=48" width="48" height="48" alt="martinpucik" title="martinpucik"/></a> <a href="https://github.com/search?q=Matt%20mini"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Matt mini" title="Matt mini"/></a> <a href="https://github.com/mertcicekci0"><img src="https://avatars.githubusercontent.com/u/179321902?v=4&s=48" width="48" height="48" alt="mertcicekci0" title="mertcicekci0"/></a> <a href="https://github.com/search?q=Miles"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Miles" title="Miles"/></a> <a href="https://github.com/mrdbstn"><img src="https://avatars.githubusercontent.com/u/58957632?v=4&s=48" width="48" height="48" alt="mrdbstn" title="mrdbstn"/></a>
-  <a href="https://github.com/MSch"><img src="https://avatars.githubusercontent.com/u/7475?v=4&s=48" width="48" height="48" alt="MSch" title="MSch"/></a> <a href="https://github.com/search?q=Mustafa%20Tag%20Eldeen"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Mustafa Tag Eldeen" title="Mustafa Tag Eldeen"/></a> <a href="https://github.com/ndraiman"><img src="https://avatars.githubusercontent.com/u/12609607?v=4&s=48" width="48" height="48" alt="ndraiman" title="ndraiman"/></a> <a href="https://github.com/nexty5870"><img src="https://avatars.githubusercontent.com/u/3869659?v=4&s=48" width="48" height="48" alt="nexty5870" title="nexty5870"/></a> <a href="https://github.com/Noctivoro"><img src="https://avatars.githubusercontent.com/u/183974570?v=4&s=48" width="48" height="48" alt="Noctivoro" title="Noctivoro"/></a> <a href="https://github.com/ppamment"><img src="https://avatars.githubusercontent.com/u/2122919?v=4&s=48" width="48" height="48" alt="ppamment" title="ppamment"/></a> <a href="https://github.com/prathamdby"><img src="https://avatars.githubusercontent.com/u/134331217?v=4&s=48" width="48" height="48" alt="prathamdby" title="prathamdby"/></a> <a href="https://github.com/ptn1411"><img src="https://avatars.githubusercontent.com/u/57529765?v=4&s=48" width="48" height="48" alt="ptn1411" title="ptn1411"/></a> <a href="https://github.com/reeltimeapps"><img src="https://avatars.githubusercontent.com/u/637338?v=4&s=48" width="48" height="48" alt="reeltimeapps" title="reeltimeapps"/></a> <a href="https://github.com/RLTCmpe"><img src="https://avatars.githubusercontent.com/u/10762242?v=4&s=48" width="48" height="48" alt="RLTCmpe" title="RLTCmpe"/></a>
-  <a href="https://github.com/search?q=Rolf%20Fredheim"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Rolf Fredheim" title="Rolf Fredheim"/></a> <a href="https://github.com/search?q=Rony%20Kelner"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Rony Kelner" title="Rony Kelner"/></a> <a href="https://github.com/search?q=Samrat%20Jha"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Samrat Jha" title="Samrat Jha"/></a> <a href="https://github.com/senoldogann"><img src="https://avatars.githubusercontent.com/u/45736551?v=4&s=48" width="48" height="48" alt="senoldogann" title="senoldogann"/></a> <a href="https://github.com/sergical"><img src="https://avatars.githubusercontent.com/u/3760543?v=4&s=48" width="48" height="48" alt="sergical" title="sergical"/></a> <a href="https://github.com/shiv19"><img src="https://avatars.githubusercontent.com/u/9407019?v=4&s=48" width="48" height="48" alt="shiv19" title="shiv19"/></a> <a href="https://github.com/shiyuanhai"><img src="https://avatars.githubusercontent.com/u/1187370?v=4&s=48" width="48" height="48" alt="shiyuanhai" title="shiyuanhai"/></a> <a href="https://github.com/siraht"><img src="https://avatars.githubusercontent.com/u/73152895?v=4&s=48" width="48" height="48" alt="siraht" title="siraht"/></a> <a href="https://github.com/snopoke"><img src="https://avatars.githubusercontent.com/u/249606?v=4&s=48" width="48" height="48" alt="snopoke" title="snopoke"/></a> <a href="https://github.com/search?q=techboss"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="techboss" title="techboss"/></a>
-  <a href="https://github.com/testingabc321"><img src="https://avatars.githubusercontent.com/u/8577388?v=4&s=48" width="48" height="48" alt="testingabc321" title="testingabc321"/></a> <a href="https://github.com/search?q=The%20Admiral"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="The Admiral" title="The Admiral"/></a> <a href="https://github.com/thesash"><img src="https://avatars.githubusercontent.com/u/1166151?v=4&s=48" width="48" height="48" alt="thesash" title="thesash"/></a> <a href="https://github.com/search?q=Ubuntu"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Ubuntu" title="Ubuntu"/></a> <a href="https://github.com/voidserf"><img src="https://avatars.githubusercontent.com/u/477673?v=4&s=48" width="48" height="48" alt="voidserf" title="voidserf"/></a> <a href="https://github.com/search?q=Vultr-Clawd%20Admin"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Vultr-Clawd Admin" title="Vultr-Clawd Admin"/></a> <a href="https://github.com/search?q=Wimmie"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Wimmie" title="Wimmie"/></a> <a href="https://github.com/search?q=wolfred"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="wolfred" title="wolfred"/></a> <a href="https://github.com/wstock"><img src="https://avatars.githubusercontent.com/u/1394687?v=4&s=48" width="48" height="48" alt="wstock" title="wstock"/></a> <a href="https://github.com/YangHuang2280"><img src="https://avatars.githubusercontent.com/u/201681634?v=4&s=48" width="48" height="48" alt="YangHuang2280" title="YangHuang2280"/></a>
-  <a href="https://github.com/yazinsai"><img src="https://avatars.githubusercontent.com/u/1846034?v=4&s=48" width="48" height="48" alt="yazinsai" title="yazinsai"/></a> <a href="https://github.com/YiWang24"><img src="https://avatars.githubusercontent.com/u/176262341?v=4&s=48" width="48" height="48" alt="YiWang24" title="YiWang24"/></a> <a href="https://github.com/search?q=ymat19"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="ymat19" title="ymat19"/></a> <a href="https://github.com/search?q=Zach%20Knickerbocker"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Zach Knickerbocker" title="Zach Knickerbocker"/></a> <a href="https://github.com/zackerthescar"><img src="https://avatars.githubusercontent.com/u/38077284?v=4&s=48" width="48" height="48" alt="zackerthescar" title="zackerthescar"/></a> <a href="https://github.com/0xJonHoldsCrypto"><img src="https://avatars.githubusercontent.com/u/81202085?v=4&s=48" width="48" height="48" alt="0xJonHoldsCrypto" title="0xJonHoldsCrypto"/></a> <a href="https://github.com/aaronn"><img src="https://avatars.githubusercontent.com/u/1653630?v=4&s=48" width="48" height="48" alt="aaronn" title="aaronn"/></a> <a href="https://github.com/Alphonse-arianee"><img src="https://avatars.githubusercontent.com/u/254457365?v=4&s=48" width="48" height="48" alt="Alphonse-arianee" title="Alphonse-arianee"/></a> <a href="https://github.com/atalovesyou"><img src="https://avatars.githubusercontent.com/u/3534502?v=4&s=48" width="48" height="48" alt="atalovesyou" title="atalovesyou"/></a> <a href="https://github.com/search?q=Azade"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Azade" title="Azade"/></a>
-  <a href="https://github.com/carlulsoe"><img src="https://avatars.githubusercontent.com/u/34673973?v=4&s=48" width="48" height="48" alt="carlulsoe" title="carlulsoe"/></a> <a href="https://github.com/search?q=ddyo"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="ddyo" title="ddyo"/></a> <a href="https://github.com/search?q=Erik"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Erik" title="Erik"/></a> <a href="https://github.com/latitudeki5223"><img src="https://avatars.githubusercontent.com/u/119656367?v=4&s=48" width="48" height="48" alt="latitudeki5223" title="latitudeki5223"/></a> <a href="https://github.com/search?q=Manuel%20Maly"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Manuel Maly" title="Manuel Maly"/></a> <a href="https://github.com/search?q=Mourad%20Boustani"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Mourad Boustani" title="Mourad Boustani"/></a> <a href="https://github.com/odrobnik"><img src="https://avatars.githubusercontent.com/u/333270?v=4&s=48" width="48" height="48" alt="odrobnik" title="odrobnik"/></a> <a href="https://github.com/pcty-nextgen-ios-builder"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="pcty-nextgen-ios-builder" title="pcty-nextgen-ios-builder"/></a> <a href="https://github.com/search?q=Quentin"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Quentin" title="Quentin"/></a> <a href="https://github.com/search?q=Randy%20Torres"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="Randy Torres" title="Randy Torres"/></a>
-  <a href="https://github.com/rhjoh"><img src="https://avatars.githubusercontent.com/u/105699450?v=4&s=48" width="48" height="48" alt="rhjoh" title="rhjoh"/></a> <a href="https://github.com/ronak-guliani"><img src="https://avatars.githubusercontent.com/u/23518228?v=4&s=48" width="48" height="48" alt="ronak-guliani" title="ronak-guliani"/></a> <a href="https://github.com/search?q=William%20Stock"><img src="assets/avatar-placeholder.svg" width="48" height="48" alt="William Stock" title="William Stock"/></a>
+# Rechazar un emparejamiento
+moltbot pairing reject whatsapp XYZ789
+
+# Ver lista de permitidos
+moltbot pairing allowlist
+```
+
+### Gestionar Modelos
+
+```bash
+# Listar modelos disponibles
+moltbot models list
+
+# Ver configuración de modelos
+moltbot models config
+
+# Probar un modelo
+moltbot models test claude-4.5-sonnet
+
+# Cambiar modelo por defecto
+moltbot config set agents.default.model claude-4.5-sonnet
+```
+
+### Gestionar Skills
+
+```bash
+# Listar skills disponibles
+moltbot skills list
+
+# Instalar un skill
+moltbot skills install workspace1
+
+# Actualizar skills
+moltbot skills update
+
+# Ver configuración de skills
+moltbot skills config
+```
+
+### Diagnóstico
+
+```bash
+# Ejecutar diagnóstico completo
+moltbot doctor
+
+# Ver logs del gateway
+moltbot logs gateway
+
+# Ver logs del agente
+moltbot logs agent
+
+# Ver logs de un canal
+moltbot logs channel telegram
+```
+
+📖 **Profundizar**: Ver [Comandos CLI](docs/README-ES.md#cli)
+
+---
+
+## Canales Soportados
+
+### Canales Integrados
+
+| Canal | Biblioteca | Estado | Documentación |
+|-------|-----------|--------|---------------|
+| **WhatsApp** | @whiskeysockets/baileys | ✅ Estable | [Ver docs](docs/channels/) |
+| **Telegram** | grammy | ✅ Estable | [Ver docs](docs/channels/) |
+| **Signal** | signal-cli | ✅ Estable | [Ver docs](docs/channels/) |
+| **iMessage** | imsg | ✅ Estable | [Ver docs](docs/channels/) |
+| **Discord** | discord.js | ✅ Estable | [Ver docs](docs/channels/) |
+| **Slack** | @slack/bolt | ✅ Estable | [Ver docs](docs/channels/) |
+| **Google Chat** | Chat API | ✅ Estable | [Ver docs](docs/channels/) |
+
+### Canales de Extensión
+
+| Canal | Ubicación | Estado | Documentación |
+|-------|-----------|--------|---------------|
+| **BlueBubbles** | extensions/bluebubbles | ✅ Estable | [Ver docs](docs/channels/) |
+| **Microsoft Teams** | extensions/msteams | ✅ Estable | [Ver docs](docs/channels/) |
+| **Matrix** | extensions/matrix | ✅ Estable | [Ver docs](docs/channels/) |
+| **Zalo** | extensions/zalo | ✅ Estable | [Ver docs](docs/channels/) |
+| **Zalo Personal** | extensions/zalouser | ✅ Estable | [Ver docs](docs/channels/) |
+| **Twitch** | extensions/twitch | ✅ Estable | [Ver docs](docs/channels/) |
+| **Mattermost** | extensions/mattermost | ✅ Estable | [Ver docs](docs/channels/) |
+| **LINE** | extensions/line | ✅ Estable | [Ver docs](docs/channels/) |
+| **Voice Call** | extensions/voice-call | 🔶 Beta | [Ver docs](docs/channels/) |
+
+### Características de Canal
+
+- ✅ **Emparejamiento DM**: Lista de permitidos basada en código
+- ✅ **Enrutamiento de grupo**: Control de menciones
+- ✅ **Etiquetas de respuesta**: Respuestas basadas en hilos
+- ✅ **Fragmentación de mensajes**: Límites específicos por canal
+- ✅ **Reacciones**: Reconocimientos
+- ✅ **Indicadores de escritura**: Estado en tiempo real
+- ✅ **Redacción de medios**: Capacidades de privacidad
+
+📖 **Profundizar**: Ver [Documentación de Canales](docs/README-ES.md#canales-de-mensajería)
+
+---
+
+## Documentación Completa
+
+### 📚 Documentación Principal
+
+- **[README Español (Completo)](docs/README-ES.md)** - Documentación completa en español
+- **[Arquitectura](docs/ARCHITECTURE.md)** - Arquitectura técnica detallada del sistema
+- **[Componentes](docs/COMPONENTS.md)** - Descripción de componentes individuales (próximamente)
+- **[Desarrollo](docs/DEVELOPMENT.md)** - Guía para desarrolladores (próximamente)
+- **[Plugin Development](docs/PLUGIN-DEVELOPMENT.md)** - Crear plugins personalizados (próximamente)
+- **[API Reference](docs/API-REFERENCE.md)** - Referencia completa de API (próximamente)
+- **[Deployment](docs/DEPLOYMENT.md)** - Guías de despliegue (próximamente)
+
+### 🔧 Configuración y Administración
+
+- **Gateway**: Ver [docs/gateway/](docs/gateway/)
+- **Canales**: Ver [docs/channels/](docs/channels/)
+- **Seguridad**: Ver [docs/security/](docs/security/)
+- **CLI**: Ver [docs/cli/](docs/cli/)
+
+### 💡 Conceptos y Guías
+
+- **Modelos IA**: Ver [docs/concepts/](docs/concepts/)
+- **Sesiones**: Ver [docs/concepts/](docs/concepts/)
+- **Herramientas**: Ver [docs/tools/](docs/tools/)
+- **Plugins**: Ver [docs/plugins/](docs/plugins/)
+
+### 🚀 Inicio Rápido
+
+- **Getting Started**: Ver [docs/start/](docs/start/)
+- **Instalación**: Ver [docs/install/](docs/install/)
+- **Plataformas**: Ver [docs/platforms/](docs/platforms/)
+
+### 📖 Referencia
+
+- **Testing**: Ver [docs/testing.md](docs/testing.md)
+- **Environment**: Ver [docs/environment.md](docs/environment.md)
+- **Debugging**: Ver [docs/debugging.md](docs/debugging.md)
+
+---
+
+## Desarrollo
+
+### Configuración del Entorno de Desarrollo
+
+```bash
+# 1. Clonar repositorio
+git clone https://github.com/jeturing/Jarvis.git
+cd Jarvis
+
+# 2. Instalar dependencias
+pnpm install
+
+# 3. Construir UI
+pnpm ui:build
+
+# 4. Construir proyecto
+pnpm build
+
+# 5. Ejecutar en modo desarrollo
+pnpm gateway:watch  # Auto-recarga en cambios
+```
+
+### Scripts de Desarrollo
+
+```bash
+# Desarrollo
+pnpm dev                  # Ejecutar CLI en modo dev
+pnpm gateway:watch        # Gateway con auto-recarga
+pnpm gateway:dev          # Gateway dev sin canales
+pnpm tui:dev              # UI de terminal dev
+
+# Build
+pnpm build                # Compilar TypeScript
+pnpm ui:build             # Construir UI web
+pnpm canvas:a2ui:bundle   # Empaquetar Canvas A2UI
+
+# Testing
+pnpm test                 # Ejecutar todos los tests
+pnpm test:watch           # Tests en modo watch
+pnpm test:coverage        # Tests con cobertura
+pnpm test:e2e             # Tests end-to-end
+
+# Linting & Formatting
+pnpm lint                 # Lint TypeScript
+pnpm lint:fix             # Fix problemas de lint
+pnpm format               # Verificar formato
+pnpm format:fix           # Fix formato
+
+# Plataformas
+pnpm ios:build            # Construir app iOS
+pnpm android:run          # Ejecutar app Android
+pnpm mac:package          # Empaquetar app macOS
+```
+
+### Estructura del Proyecto
+
+```
+/
+├── src/                  # Código fuente TypeScript
+├── extensions/           # Plugins de canal y extensiones
+├── apps/                 # Aplicaciones nativas (macOS, iOS, Android)
+├── docs/                 # Documentación
+├── skills/               # Paquetes de skills de workspace
+├── scripts/              # Scripts de utilidad
+├── test/                 # Fixtures de test y helpers
+└── ui/                   # UI web (Control UI)
+```
+
+📖 **Profundizar**: Ver [Estructura Completa](docs/README-ES.md#estructura-de-directorios)
+
+---
+
+## Contribuir
+
+¡Las contribuciones son bienvenidas! Por favor lee [CONTRIBUTING.md](CONTRIBUTING.md) para detalles sobre nuestro código de conducta y el proceso para enviar pull requests.
+
+### Cómo Contribuir
+
+1. **Fork el repositorio**
+2. **Crea una rama** para tu feature (`git checkout -b feature/AmazingFeature`)
+3. **Commit tus cambios** (`git commit -m 'Add some AmazingFeature'`)
+4. **Push a la rama** (`git push origin feature/AmazingFeature`)
+5. **Abre un Pull Request**
+
+### Áreas de Contribución
+
+- 🐛 **Bug fixes**: Reporta o arregla bugs
+- ✨ **Nuevas características**: Propón o implementa nuevas features
+- 📝 **Documentación**: Mejora la documentación
+- 🔌 **Plugins**: Crea nuevos plugins de canal o herramientas
+- 🧪 **Tests**: Añade o mejora tests
+- 🌐 **Traducciones**: Traduce documentación a otros idiomas
+
+---
+
+## Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
+
+---
+
+## Soporte
+
+¿Necesitas ayuda? Aquí tienes algunas opciones:
+
+- 📖 **Documentación**: Revisa la [documentación completa](docs/README-ES.md)
+- 🐛 **Issues**: Reporta bugs en [GitHub Issues](https://github.com/jeturing/Jarvis/issues)
+- 💬 **Discusiones**: Únete a [GitHub Discussions](https://github.com/jeturing/Jarvis/discussions)
+- 📧 **Email**: Contacta al equipo de desarrollo
+
+---
+
+## Agradecimientos
+
+Gracias a todos los contribuidores que han ayudado a hacer este proyecto posible.
+
+---
+
+## Seguridad
+
+Para reportar vulnerabilidades de seguridad, por favor lee [SECURITY.md](SECURITY.md).
+
+---
+
+<p align="center">
+  <strong>Hecho con ❤️ por la comunidad</strong>
+</p>
+
+<p align="center">
+  <sub>Si encuentras útil este proyecto, considera darle una ⭐ en GitHub</sub>
 </p>
