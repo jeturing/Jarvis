@@ -947,6 +947,73 @@ export function collectExposureMatrixFindings(cfg: MoltbotConfig): SecurityAudit
   return findings;
 }
 
+/**
+ * Check for wildcard allowlists in channel configurations.
+ * Wildcard ("*") allowlists allow anyone to interact with the bot,
+ * which is a critical security risk.
+ */
+export function collectWildcardAllowlistFindings(cfg: MoltbotConfig): SecurityAuditFinding[] {
+  const findings: SecurityAuditFinding[] = [];
+  const channels = cfg.channels as Record<string, unknown> | undefined;
+  if (!channels || typeof channels !== "object") return findings;
+
+  for (const [channelId, value] of Object.entries(channels)) {
+    if (!value || typeof value !== "object") continue;
+    const section = value as Record<string, unknown>;
+
+    // Check main allowFrom
+    const allowFrom = section.allowFrom;
+    if (Array.isArray(allowFrom) && allowFrom.includes("*")) {
+      findings.push({
+        checkId: `channels.${channelId}.allowFrom.wildcard`,
+        severity: "critical",
+        title: `${channelId} allowFrom includes wildcard "*"`,
+        detail:
+          `channels.${channelId}.allowFrom includes "*", which allows anyone to message the bot. ` +
+          "This bypasses all pairing/approval mechanisms and is extremely dangerous in production.",
+        remediation: `Remove "*" from channels.${channelId}.allowFrom and use pairing (dmPolicy="pairing") or explicit user IDs instead.`,
+      });
+    }
+
+    // Check groupAllowFrom (WhatsApp specific)
+    const groupAllowFrom = section.groupAllowFrom;
+    if (Array.isArray(groupAllowFrom) && groupAllowFrom.includes("*")) {
+      findings.push({
+        checkId: `channels.${channelId}.groupAllowFrom.wildcard`,
+        severity: "critical",
+        title: `${channelId} groupAllowFrom includes wildcard "*"`,
+        detail:
+          `channels.${channelId}.groupAllowFrom includes "*", which allows the bot to respond in any group. ` +
+          "This can leak sensitive information or be exploited via prompt injection.",
+        remediation: `Remove "*" from channels.${channelId}.groupAllowFrom and list specific group IDs instead.`,
+      });
+    }
+
+    // Check per-account allowFrom
+    const accounts = section.accounts;
+    if (accounts && typeof accounts === "object") {
+      for (const [accountId, accountVal] of Object.entries(accounts)) {
+        if (!accountVal || typeof accountVal !== "object") continue;
+        const acc = accountVal as Record<string, unknown>;
+
+        if (Array.isArray(acc.allowFrom) && acc.allowFrom.includes("*")) {
+          findings.push({
+            checkId: `channels.${channelId}.accounts.${accountId}.allowFrom.wildcard`,
+            severity: "critical",
+            title: `${channelId} account ${accountId} allowFrom includes wildcard "*"`,
+            detail:
+              `channels.${channelId}.accounts.${accountId}.allowFrom includes "*", allowing anyone to message this account. ` +
+              "This is a severe security risk.",
+            remediation: `Remove "*" from the allowFrom list and use pairing or explicit user IDs.`,
+          });
+        }
+      }
+    }
+  }
+
+  return findings;
+}
+
 export async function readConfigSnapshotForAudit(params: {
   env: NodeJS.ProcessEnv;
   configPath: string;

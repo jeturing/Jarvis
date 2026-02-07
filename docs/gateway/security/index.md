@@ -5,6 +5,10 @@ read_when:
 ---
 # Security 🔒
 
+> **⚠️ Critical Warning**: Running an AI agent with shell access is powerful but risky. There is no "perfectly secure" setup. Many Moltbot instances are exposed on the internet with no authentication, leaking API keys, tokens, and conversation history. Follow this guide carefully.
+
+**Available in:** [English](#) | [Español (Spanish)](/security/guia-seguridad-es)
+
 ## Quick check: `moltbot security audit` (formerly `clawdbot security audit`)
 
 See also: [Formal Verification (Security Models)](/security/formal-verification/)
@@ -46,6 +50,10 @@ Start with the smallest access that still works, then widen it as you gain confi
 - **Model hygiene** (warn when configured models look legacy; not a hard block).
 
 If you run `--deep`, Moltbot also attempts a best-effort live Gateway probe.
+
+**New security checks:**
+- **Wildcard allowlists** (`allowFrom: ["*"]`): Now explicitly detected as critical severity. Never use wildcards in production—they allow anyone to message your bot and bypass all pairing/approval mechanisms.
+- **Enhanced remediation guidance**: The audit now provides specific, actionable steps to fix each security issue.
 
 ## Credential storage map
 
