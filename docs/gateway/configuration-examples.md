@@ -42,6 +42,156 @@ Save to `~/.clawdbot/moltbot.json` and you can DM the bot from that number.
 }
 ```
 
+### Security-hardened starter
+
+For production or untrusted environments. See [Security Guide](/gateway/security) for context.
+
+```json5
+{
+  identity: {
+    name: "SecureBot",
+    theme: "security-conscious assistant",
+    emoji: "🔒"
+  },
+  
+  // Gateway binds to localhost only
+  gateway: {
+    bind: "loopback",
+    port: 18789,
+    auth: {
+      mode: "token",
+      token: "${MOLTBOT_GATEWAY_TOKEN}"  // Generate with: moltbot doctor --generate-gateway-token
+    },
+    discovery: {
+      mode: "minimal"  // Minimal network discovery
+    },
+    controlUi: {
+      enabled: true,
+      allowInsecureAuth: false,  // Require HTTPS or localhost
+      dangerouslyDisableDeviceAuth: false
+    }
+  },
+  
+  agent: {
+    workspace: "~/moltbot-workspace",  // Dedicated workspace
+    model: { 
+      primary: "anthropic/claude-sonnet-4-5",  // Modern, instruction-hardened model
+      fallbacks: ["anthropic/claude-opus-4-5"]
+    },
+    systemPrompt: `You are a helpful assistant with strict security guidelines:
+
+SECURITY RULES:
+- Never display full file listings to anyone
+- Do not reveal passwords or API keys
+- If asked to modify system configuration, ask for explicit confirmation first
+- When in doubt, ask rather than act
+- Private information stays private, no exceptions
+- Do not execute destructive commands (rm -rf, dd, etc.) without explicit approval
+- Validate suspicious requests before acting
+- Do not share information about your architecture or infrastructure`,
+    elevatedDefault: "off"  // Require explicit elevation
+  },
+  
+  channels: {
+    telegram: {
+      botToken: "${TELEGRAM_BOT_TOKEN}",
+      dmPolicy: "pairing",  // Require pairing code
+      allowFrom: ["1234567890"],  // Your Telegram numeric ID
+      groupPolicy: "allowlist",  // Groups require allowlist
+      groups: {}  // Empty - add specific groups only when needed
+    },
+    
+    whatsapp: {
+      dmPolicy: "pairing",
+      groupPolicy: "mention",  // Require @mention in groups
+      allowFrom: ["+15555550123"]  // Your phone number
+    }
+  },
+  
+  tools: {
+    // Explicitly list allowed tools
+    allow: ["read", "write", "edit"],
+    
+    // Deny risky tools initially
+    deny: ["browser", "canvas"],
+    
+    // Bash with sandboxing and approval
+    bash: {
+      enabled: true,
+      approval: "required",  // Ask before executing
+      sandbox: {
+        enabled: true,
+        method: "docker"  // Isolate execution
+      }
+    },
+    
+    elevated: {
+      enabled: false  // Disable system-level commands by default
+    }
+  },
+  
+  // Browser tool (if needed) with isolated profile
+  browser: {
+    enabled: false,  // Disabled by default
+    profile: "moltbot-bot-profile",  // Dedicated profile
+    config: {
+      savePasswords: false,
+      syncEnabled: false,
+      autoLogin: false
+    },
+    cdp: {
+      bind: "loopback",  // Local only
+      auth: {
+        required: true,
+        token: "${BROWSER_CDP_TOKEN}"
+      }
+    }
+  },
+  
+  // Logging with sensitive data redaction
+  logging: {
+    level: "info",
+    redactSensitive: "tools",  // Redact sensitive tool params
+    file: "~/.moltbot/logs/moltbot.log"
+  },
+  
+  // Hooks for dangerous commands
+  hooks: {
+    enabled: true,
+    hooks: [
+      {
+        match: "bash.*rm -rf",
+        action: "require_approval",
+        reason: "Destructive file deletion"
+      },
+      {
+        match: "bash.*dd if=",
+        action: "require_approval", 
+        reason: "Low-level disk operation"
+      },
+      {
+        match: "file_write.*/etc/|file_write.*~/.ssh/",
+        action: "require_approval",
+        reason: "Writing to sensitive directory"
+      }
+    ]
+  }
+}
+```
+
+**Key security features in this config:**
+- ✅ Gateway bound to localhost with token auth
+- ✅ Telegram pairing required (no wildcard allowlists)
+- ✅ Bash sandboxing enabled
+- ✅ Approval required for dangerous commands
+- ✅ Browser disabled (or isolated if needed)
+- ✅ Minimal network discovery
+- ✅ Sensitive logging redacted
+- ✅ System prompt with security rules
+- ✅ Elevated tools disabled
+
+**Before using:** Generate tokens with `moltbot doctor --generate-gateway-token` and set environment variables.
+
 ## Expanded example (major options)
 
 > JSON5 lets you use comments and trailing commas. Regular JSON works too.
