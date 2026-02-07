@@ -1289,4 +1289,110 @@ describe("security audit", () => {
       expect(capturedAuth?.token).toBe("fallback-local-token");
     });
   });
+
+  describe("wildcard allowlist detection", () => {
+    it("flags wildcard in allowFrom as critical", async () => {
+      const cfg: MoltbotConfig = {
+        channels: {
+          telegram: {
+            allowFrom: ["123456789", "*"],
+          },
+        },
+      };
+
+      const res = await runSecurityAudit({
+        config: cfg,
+        includeFilesystem: false,
+        includeChannelSecurity: false,
+      });
+
+      expect(res.findings).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            checkId: "channels.telegram.allowFrom.wildcard",
+            severity: "critical",
+            title: expect.stringContaining("wildcard"),
+          }),
+        ]),
+      );
+    });
+
+    it("flags wildcard in groupAllowFrom as critical", async () => {
+      const cfg: MoltbotConfig = {
+        channels: {
+          whatsapp: {
+            groupAllowFrom: ["*"],
+          },
+        },
+      };
+
+      const res = await runSecurityAudit({
+        config: cfg,
+        includeFilesystem: false,
+        includeChannelSecurity: false,
+      });
+
+      expect(res.findings).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            checkId: "channels.whatsapp.groupAllowFrom.wildcard",
+            severity: "critical",
+            title: expect.stringContaining("wildcard"),
+          }),
+        ]),
+      );
+    });
+
+    it("flags wildcard in per-account allowFrom as critical", async () => {
+      const cfg: MoltbotConfig = {
+        channels: {
+          telegram: {
+            accounts: {
+              mybot: {
+                allowFrom: ["*"],
+              },
+            },
+          },
+        },
+      };
+
+      const res = await runSecurityAudit({
+        config: cfg,
+        includeFilesystem: false,
+        includeChannelSecurity: false,
+      });
+
+      expect(res.findings).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            checkId: "channels.telegram.accounts.mybot.allowFrom.wildcard",
+            severity: "critical",
+            title: expect.stringContaining("wildcard"),
+          }),
+        ]),
+      );
+    });
+
+    it("does not flag when no wildcard is present", async () => {
+      const cfg: MoltbotConfig = {
+        channels: {
+          telegram: {
+            allowFrom: ["123456789", "987654321"],
+          },
+          whatsapp: {
+            groupAllowFrom: ["+15551234567"],
+          },
+        },
+      };
+
+      const res = await runSecurityAudit({
+        config: cfg,
+        includeFilesystem: false,
+        includeChannelSecurity: false,
+      });
+
+      const wildcardFindings = res.findings.filter((f) => f.checkId.includes("wildcard"));
+      expect(wildcardFindings).toHaveLength(0);
+    });
+  });
 });
