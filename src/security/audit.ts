@@ -19,6 +19,7 @@ import {
   collectSecretsInConfigFindings,
   collectStateDeepFilesystemFindings,
   collectSyncedFolderFindings,
+  collectWildcardAllowlistFindings,
   readConfigSnapshotForAudit,
 } from "./audit-extra.js";
 import { readChannelAllowFromStore } from "../pairing/pairing-store.js";
@@ -877,6 +878,7 @@ export async function runSecurityAudit(opts: SecurityAuditOptions): Promise<Secu
   findings.push(...collectModelHygieneFindings(cfg));
   findings.push(...collectSmallModelRiskFindings({ cfg, env }));
   findings.push(...collectExposureMatrixFindings(cfg));
+  findings.push(...collectWildcardAllowlistFindings(cfg));
 
   const configSnapshot =
     opts.includeFilesystem !== false

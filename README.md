@@ -47,8 +47,10 @@
 ### 🔐 Seguridad y Privacidad
 - **Local-First**: Todos tus datos permanecen en tu dispositivo
 - **Sin Servidor Central**: No hay dependencia de servicios de terceros
-- **Emparejamiento Seguro**: Sistema de códigos para autorización DM
+- **Emparejamiento Seguro**: Sistema de códigos para autorización DM (expiran en 1 hora)
 - **Lista de Permitidos**: Control granular de quién puede interactuar
+- **Auditoría Integrada**: `moltbot security audit` detecta configuraciones inseguras
+- **Guía Completa**: [Documentación de seguridad](docs/security/guia-seguridad-es.md) con mejores prácticas
 
 ### 💬 Multi-Canal
 - **Mensajería Unificada**: Una interfaz para todos tus canales de chat
@@ -793,7 +795,19 @@ Gracias a todos los contribuidores que han ayudado a hacer este proyecto posible
 
 ## Seguridad
 
-Para reportar vulnerabilidades de seguridad, por favor lee [SECURITY.md](SECURITY.md).
+**⚠️ Importante**: Moltbot es una herramienta poderosa que requiere configuración cuidadosa. Muchas instancias expuestas en internet carecen de autenticación adecuada.
+
+**Guías de seguridad:**
+- **[Guía Completa de Seguridad (Español)](docs/security/guia-seguridad-es.md)** - Guía exhaustiva con mejores prácticas, ejemplos de configuración y respuesta a incidentes
+- **[Security Guide (English)](docs/gateway/security/index.md)** - Complete security considerations and threat model
+- **[SECURITY.md](SECURITY.md)** - Para reportar vulnerabilidades
+
+**Verificación rápida:**
+```bash
+moltbot security audit --deep --fix
+```
+
+**Configuración recomendada:** Ver [ejemplos de configuración segura](docs/gateway/configuration-examples.md#security-hardened-starter)
 
 ---
 
