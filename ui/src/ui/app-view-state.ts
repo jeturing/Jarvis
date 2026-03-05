@@ -33,6 +33,9 @@ import type { NostrProfileFormState } from "./views/channels.nostr-profile-form"
 export type AppViewState = {
   settings: UiSettings;
   password: string;
+  isLoggedIn: boolean;
+  loginLoading: boolean;
+  loginError: string | null;
   tab: Tab;
   onboarding: boolean;
   basePath: string;
@@ -107,6 +110,8 @@ export type AppViewState = {
   agentsLoading: boolean;
   agentsList: AgentsListResult | null;
   agentsError: string | null;
+  dashboardSubView: "tasks" | "pipeline" | "calendar" | "monitor";
+  dashboardTaskFilter: string;
   sessionsLoading: boolean;
   sessionsResult: SessionsListResult | null;
   sessionsError: string | null;

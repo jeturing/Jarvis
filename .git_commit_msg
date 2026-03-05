@@ -1,0 +1,31 @@
+feat: Add authentication, real-time dashboard, and Windows auto-start service
+
+- Login form with turing/jeturing credentials
+- Real-time Agents Dashboard with Tasks, Pipeline, Calendar, Monitor views
+- Windows auto-start using startup shortcut
+- Gateway token auto-injection into HTML
+- Logout functionality with session clearing
+
+New Features:
+* Secure authentication layer
+* Kanban board for session management
+* Content pipeline visualization
+* Cron job calendar
+* Real-time agent monitoring
+* Automatic token persistence
+
+Infrastructure:
+* Windows startup service setup
+* Auto-token from gateway
+* Improved WebSocket connection
+
+Files Changed:
++ ui/src/ui/views/login.ts (new login component)
++ ui/src/ui/views/dashboard.ts (new dashboard)
++ ui/src/ui/controllers/dashboard.ts (new controller)
++ scripts/start-gateway.bat (new launcher)
++ scripts/create-startup-shortcut.ps1 (new installer)
++ IMPLEMENTATION.md (new documentation)
++ README-LATEST.md (updated docs)
+- Multiple UI components (login state, rendering, auth)
+- Gateway control-ui (token injection)

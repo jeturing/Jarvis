@@ -1,6 +1,7 @@
 import { loadConfig, loadConfigSchema } from "./controllers/config";
 import { loadCronJobs, loadCronStatus } from "./controllers/cron";
 import { loadChannels } from "./controllers/channels";
+import { loadAgents } from "./controllers/agents";
 import { loadDebug } from "./controllers/debug";
 import { loadLogs } from "./controllers/logs";
 import { loadDevices } from "./controllers/devices";
@@ -111,6 +112,13 @@ export function applySettingsFromUrl(host: SettingsHost) {
   window.history.replaceState({}, "", url.toString());
 }
 
+export function applyInjectedToken(host: SettingsHost) {
+  const injected = window.__CLAWDBOT_GATEWAY_TOKEN__;
+  if (typeof injected !== "string" || !injected) return;
+  if (host.settings.token) return; // Don't override token already saved in localStorage
+  applySettings(host, { ...host.settings, token: injected });
+}
+
 export function setTab(host: SettingsHost, next: Tab) {
   if (host.tab !== next) host.tab = next;
   if (next === "chat") host.chatHasAutoScrolled = false;
@@ -149,6 +157,14 @@ export async function refreshActiveTab(host: SettingsHost) {
   if (host.tab === "sessions") await loadSessions(host as unknown as MoltbotApp);
   if (host.tab === "cron") await loadCron(host);
   if (host.tab === "skills") await loadSkills(host as unknown as MoltbotApp);
+  if (host.tab === "dashboard") {
+    await Promise.all([
+      loadAgents(host as unknown as MoltbotApp),
+      loadSessions(host as unknown as MoltbotApp),
+      loadCronJobs(host as unknown as MoltbotApp),
+      loadCronStatus(host as unknown as MoltbotApp),
+    ]);
+  }
   if (host.tab === "nodes") {
     await loadNodes(host as unknown as MoltbotApp);
     await loadDevices(host as unknown as MoltbotApp);

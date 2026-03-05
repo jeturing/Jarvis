@@ -179,6 +179,7 @@ function handleGatewayEventUnsafe(host: GatewayHost, evt: GatewayEventFrame) {
       host as unknown as Parameters<typeof handleAgentEvent>[0],
       evt.payload as AgentEventPayload | undefined,
     );
+    if (host.tab === "dashboard") void loadAgents(host as unknown as MoltbotApp);
     return;
   }
 

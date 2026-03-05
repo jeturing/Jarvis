@@ -82,6 +82,7 @@ import { loadAssistantIdentity as loadAssistantIdentityInternal } from "./contro
 declare global {
   interface Window {
     __CLAWDBOT_CONTROL_UI_BASE_PATH__?: string;
+    __CLAWDBOT_GATEWAY_TOKEN__?: string;
   }
 }
 
@@ -100,6 +101,9 @@ function resolveOnboardingMode(): boolean {
 export class MoltbotApp extends LitElement {
   @state() settings: UiSettings = loadSettings();
   @state() password = "";
+  @state() isLoggedIn = !!localStorage.getItem("moltbot-auth-token");
+  @state() loginLoading = false;
+  @state() loginError: string | null = null;
   @state() tab: Tab = "chat";
   @state() onboarding = resolveOnboardingMode();
   @state() connected = false;
@@ -195,6 +199,8 @@ export class MoltbotApp extends LitElement {
   @state() agentsLoading = false;
   @state() agentsList: AgentsListResult | null = null;
   @state() agentsError: string | null = null;
+  @state() dashboardSubView: "tasks" | "pipeline" | "calendar" | "monitor" = "tasks";
+  @state() dashboardTaskFilter = "";
 
   @state() sessionsLoading = false;
   @state() sessionsResult: SessionsListResult | null = null;
@@ -488,6 +494,31 @@ export class MoltbotApp extends LitElement {
       this.sidebarError = null;
       this.sidebarCloseTimer = null;
     }, 200);
+  }
+
+  handleLogin(username: string, password: string) {
+    this.loginLoading = true;
+    this.loginError = null;
+
+    // Validate credentials (hardcoded for now: turing / jeturing)
+    if (username === "turing" && password === "jeturing") {
+      // Generate a simple token
+      const token = btoa(`${username}:${Date.now()}`);
+      localStorage.setItem("moltbot-auth-token", token);
+      localStorage.setItem("moltbot-auth-user", username);
+      this.isLoggedIn = true;
+      this.loginLoading = false;
+    } else {
+      this.loginError = "Invalid username or password.";
+      this.loginLoading = false;
+    }
+  }
+
+  handleLogout() {
+    localStorage.removeItem("moltbot-auth-token");
+    localStorage.removeItem("moltbot-auth-user");
+    this.isLoggedIn = false;
+    this.loginError = null;
   }
 
   handleSplitRatioChange(ratio: number) {

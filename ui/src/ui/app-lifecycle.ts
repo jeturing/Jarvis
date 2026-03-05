@@ -2,6 +2,7 @@ import type { Tab } from "./navigation";
 import { connectGateway } from "./app-gateway";
 import {
   applySettingsFromUrl,
+  applyInjectedToken,
   attachThemeListener,
   detachThemeListener,
   inferBasePath,
@@ -37,6 +38,9 @@ export function handleConnected(host: LifecycleHost) {
   host.basePath = inferBasePath();
   applySettingsFromUrl(
     host as unknown as Parameters<typeof applySettingsFromUrl>[0],
+  );
+  applyInjectedToken(
+    host as unknown as Parameters<typeof applyInjectedToken>[0],
   );
   syncTabWithLocation(
     host as unknown as Parameters<typeof syncTabWithLocation>[0],

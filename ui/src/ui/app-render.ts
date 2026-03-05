@@ -43,6 +43,7 @@ import { renderOverview } from "./views/overview";
 import { renderSessions } from "./views/sessions";
 import { renderExecApprovalPrompt } from "./views/exec-approval";
 import { renderGatewayUrlConfirmation } from "./views/gateway-url-confirmation";
+import { renderLogin } from "./views/login";
 import {
   approveDevicePairing,
   loadDevices,
@@ -51,6 +52,7 @@ import {
   rotateDeviceToken,
 } from "./controllers/devices";
 import { renderSkills } from "./views/skills";
+import { renderDashboard } from "./views/dashboard";
 import { renderChatControls, renderTab, renderThemeToggle } from "./app-render.helpers";
 import { loadChannels } from "./controllers/channels";
 import { loadPresence } from "./controllers/presence";
@@ -79,9 +81,10 @@ import {
   saveExecApprovals,
   updateExecApprovalsFormValue,
 } from "./controllers/exec-approvals";
-import { loadCronRuns, toggleCronJob, runCronJob, removeCronJob, addCronJob } from "./controllers/cron";
+import { loadCronRuns, toggleCronJob, runCronJob, removeCronJob, addCronJob, loadCronJobs, loadCronStatus } from "./controllers/cron";
 import { loadDebug, callDebugMethod } from "./controllers/debug";
 import { loadLogs } from "./controllers/logs";
+import { loadAgents } from "./controllers/agents";
 
 const AVATAR_DATA_RE = /^data:/i;
 const AVATAR_HTTP_RE = /^https?:\/\//i;
@@ -102,6 +105,17 @@ function resolveAssistantAvatarUrl(state: AppViewState): string | undefined {
 }
 
 export function renderApp(state: AppViewState) {
+  // Show login screen if not authenticated
+  if (!state.isLoggedIn) {
+    return renderLogin({
+      loading: state.loginLoading,
+      error: state.loginError,
+      onLogin: (username: string, password: string) => {
+        state.handleLogin(username, password);
+      },
+    });
+  }
+
   const presenceCount = state.presenceEntries.length;
   const sessionsCount = state.sessionsResult?.count ?? null;
   const cronNext = state.cronStatus?.nextWakeAtMs ?? null;
@@ -145,6 +159,14 @@ export function renderApp(state: AppViewState) {
             <span class="mono">${state.connected ? "OK" : "Offline"}</span>
           </div>
           ${renderThemeToggle(state)}
+          <button
+            class="btn-logout"
+            @click=${() => state.handleLogout()}
+            title="Logout"
+            aria-label="Logout"
+          >
+            ${icons.logout ?? "↗"}
+          </button>
         </div>
       </header>
       <aside class="nav ${state.settings.navCollapsed ? "nav--collapsed" : ""}">
@@ -346,6 +368,37 @@ export function renderApp(state: AppViewState) {
               onSaveKey: (key) => saveSkillApiKey(state, key),
               onInstall: (skillKey, name, installId) =>
                 installSkill(state, skillKey, name, installId),
+            })
+          : nothing}
+
+        ${state.tab === "dashboard"
+          ? renderDashboard({
+              subView: state.dashboardSubView,
+              taskFilter: state.dashboardTaskFilter,
+              connected: state.connected,
+              agentsLoading: state.agentsLoading,
+              agentsList: state.agentsList,
+              agentsError: state.agentsError,
+              sessionsLoading: state.sessionsLoading,
+              sessionsResult: state.sessionsResult,
+              sessionsError: state.sessionsError,
+              cronLoading: state.cronLoading,
+              cronJobs: state.cronJobs,
+              cronStatus: state.cronStatus,
+              cronError: state.cronError,
+              onSubViewChange: (v) => {
+                state.dashboardSubView = v;
+              },
+              onTaskFilterChange: (f) => {
+                state.dashboardTaskFilter = f;
+              },
+              onRefresh: () =>
+                void Promise.all([
+                  loadAgents(state),
+                  loadSessions(state),
+                  loadCronJobs(state),
+                  loadCronStatus(state),
+                ]),
             })
           : nothing}
 

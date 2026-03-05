@@ -1484,3 +1484,32 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+
+/* ===========================================
+   Logout Button
+   =========================================== */
+
+.btn-logout {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 6px 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    border-color var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out),
+    color var(--duration-normal) var(--ease-out);
+}
+
+.btn-logout:hover {
+  background-color: var(--bg-hover);
+  border-color: var(--border-strong);
+  color: var(--text-strong);
+}
+
+.btn-logout:active {
+  transform: scale(0.98);
+}
